@@ -80,7 +80,7 @@ export default function TournamentScreen() {
           />
         ) : null}
         <Segment>
-          <Header as="h4">Players:</Header>
+          <Header as="h4">{result.players.length} Players:</Header>
           <List animated divided verticalAlign="middle">
             {result.players.map((player) => {
               return (
