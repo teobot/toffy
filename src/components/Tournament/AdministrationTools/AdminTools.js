@@ -9,19 +9,19 @@ import {
   Step,
 } from "semantic-ui-react";
 
-import toffy from "../../api/toffy";
+import toffy from "../../../api/toffy";
 
-import TournamentStateDisplayGroup from "../Tournament/TournamentStateDisplayGroup";
+import TournamentStateDisplayGroup from "./TournamentStateDisplayGroup";
 
 export default function AdminTools({ tournament, getTournamentData }) {
-  console.log(tournament);
+  // console.log(tournament);
 
   const handleTournamentProgress = async () => {
     // Handle the user wanting to progress the tournament
     try {
       const r = await toffy.post(`/tournament/${tournament._id}/progress`);
       await getTournamentData();
-      console.log(r);
+      console.log(r.data.message);
     } catch (error) {
       // TODO: handle the progression on fail
     }
