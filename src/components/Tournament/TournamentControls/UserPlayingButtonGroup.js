@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, Container, Segment } from "semantic-ui-react";
-import toffy from "../../api/toffy";
+import toffy from "../../../api/toffy";
 
 export default function UserPlayingButtonGroup({
   tournamentData,
