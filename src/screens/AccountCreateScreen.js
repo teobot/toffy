@@ -8,6 +8,8 @@ import { LoggedInContext } from "../context/LoggedInContext";
 
 const reducer = (state, action) => {
   switch (action.type) {
+    case "change_username":
+      return { ...state, username: action.payload };
     case "change_firstname":
       return { ...state, firstname: action.payload };
     case "change_lastname":
