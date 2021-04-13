@@ -15,7 +15,7 @@ export default function HomeScreen() {
     try {
       const r = await toffy.get("/find");
       setResults(r.data);
-      console.log(r.data);
+      // console.log(r.data);
     } catch (error) {
       // TODO: error getting the tournament list data
       console.log(error);
