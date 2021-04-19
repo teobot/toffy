@@ -3,8 +3,8 @@ import ReactDOM from "react-dom";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-import "./css/index.css";
 import "semantic-ui-css/semantic.min.css";
+import "./css/index.css";
 
 import NavBar from "./components/NavBar";
 
@@ -15,6 +15,8 @@ import HomeScreen from "./screens/HomeScreen";
 import LandingScreen from "./screens/LandingScreen";
 import AccountCreateScreen from "./screens/AccountCreateScreen";
 import TournamentScreen from "./screens/TournamentScreen";
+import UserScreen from "./screens/UserScreen";
+import CreateTournamentScreen from "./screens/CreateTournamentScreen";
 
 import useLoginContext, { LoggedInContext } from "./context/LoggedInContext";
 
@@ -22,7 +24,15 @@ import RedirectLogin from "./functions/redirectLogin";
 
 const routes = [
   {
-    routeName: "/tournament/:_id",
+    routeName: "/create/tournament",
+    routerComponent: <CreateTournamentScreen />,
+  },
+  {
+    routeName: "/u/:_id",
+    routerComponent: <UserScreen />,
+  },
+  {
+    routeName: "/tournament/:_id/:view?",
     routerComponent: <TournamentScreen />,
   },
   {
@@ -51,11 +61,9 @@ function App() {
 
   return (
     <LoggedInContext.Provider value={LoginContext}>
-      <Container fluid>
-        <Divider hidden />
+      <div>
         <NavBar routes={routes} />
-        <Container>
-          <Divider hidden />
+        <div>
           <Switch>
             {routes.map((route) => {
               return (
@@ -63,8 +71,9 @@ function App() {
               );
             })}
           </Switch>
-        </Container>
-      </Container>
+        </div>
+      </div>
+      <Divider section />
     </LoggedInContext.Provider>
   );
 }
