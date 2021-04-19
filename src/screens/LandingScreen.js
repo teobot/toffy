@@ -1,12 +1,17 @@
 import React from "react";
 import { useHistory } from "react-router";
-import { Button, Container } from "semantic-ui-react";
+import { Button, Container, Divider, Header } from "semantic-ui-react";
 
+// TODO: Need to create this page
 export default function LandingScreen() {
   let history = useHistory();
   return (
-    <div>
-      <h1>LandingScreen</h1>
+    <Container>
+      <Divider hidden />
+
+      <Header inverted as="h1">
+        Landing Screen
+      </Header>
       <Container>
         <Button
           onClick={() => {
@@ -23,6 +28,6 @@ export default function LandingScreen() {
           Create Account
         </Button>
       </Container>
-    </div>
+    </Container>
   );
 }
