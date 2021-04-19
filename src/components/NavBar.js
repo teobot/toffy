@@ -2,56 +2,81 @@ import React, { useContext } from "react";
 
 import { useHistory } from "react-router-dom";
 
-import { Container, Segment, Button } from "semantic-ui-react";
+import {
+  Container,
+  Segment,
+  Button,
+  Image,
+  Grid,
+  Dropdown,
+  Menu,
+} from "semantic-ui-react";
 
 import { LoggedInContext } from "../context/LoggedInContext";
 
+import ImageClear from "../img/logoClear.png";
+
 export default function NavBar({ routes }) {
   let history = useHistory();
-  const { UserLoggedIn, handleLogout } = useContext(LoggedInContext);
+  const { UserLoggedIn, handleLogout, token, username, user_id } = useContext(
+    LoggedInContext
+  );
   return (
-    <Container>
-      <Segment clearing basic>
-        {window.location.pathname === "/login" ? (
-          <Button
-            positive
-            icon="home"
-            circular
-            floated="left"
-            onClick={() => {
-              history.push("/landing");
-            }}
-          />
-        ) : null}
-
-        {UserLoggedIn ? (
-          <Button
-            positive
-            icon="home"
-            circular
-            floated="left"
-            onClick={() => {
-              history.push("/home");
-            }}
-          />
-        ) : null}
-        {window.location.pathname !== "/login" ? (
-          <Button
-            floated="right"
-            negative
+    <div>
+      <Segment inverted clearing padded style={{ borderRadius: 0 }}>
+        <Menu inverted>
+          <Menu.Item
             onClick={() => {
               if (UserLoggedIn) {
-                handleLogout();
-                history.push("/landing");
+                history.push("/Home");
               } else {
-                history.push("/login");
+                history.push("/landing");
               }
             }}
-            icon={UserLoggedIn ? "sign-out" : "sign-in"}
-            content={UserLoggedIn ? "Logout" : "Login"}
+            link
+            name="home"
           />
-        ) : null}
+
+          {UserLoggedIn ? (
+            <>
+              <Menu.Item
+                onClick={() => {
+                  history.push("/create/tournament");
+                }}
+                link
+                name="create tournament"
+              />
+            </>
+          ) : null}
+
+          {UserLoggedIn ? (
+            <>
+              <Dropdown className="right link item" placeholder={username}>
+                <Dropdown.Menu>
+                  <Dropdown.Item
+                    onClick={() => {
+                      history.push(`/u/${user_id}`);
+                    }}
+                    text="Profile"
+                  />
+                  <Dropdown.Divider />
+                  <Dropdown.Item
+                    onClick={() => {
+                      if (UserLoggedIn) {
+                        handleLogout();
+                        history.push("/landing");
+                      } else {
+                        history.push("/login");
+                      }
+                    }}
+                    text="Logout"
+                  />
+                </Dropdown.Menu>
+              </Dropdown>
+            </>
+          ) : null}
+        </Menu>
       </Segment>
-    </Container>
+    </div>
   );
 }
