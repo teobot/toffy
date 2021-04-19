@@ -1,12 +1,18 @@
 import React, { useEffect, useState } from "react";
+
 import { useHistory } from "react-router";
-import { Button, Divider, Header, List } from "semantic-ui-react";
+
+import { Button, Container, Divider, Header, List } from "semantic-ui-react";
 
 import toffy from "../api/toffy";
+
+import useWindowWidth from "../functions/useWindowWidth";
 
 export default function HomeScreen() {
   const [results, setResults] = useState([]);
   let history = useHistory();
+
+  const { windowWidth, windowHeight } = useWindowWidth();
   useEffect(() => {
     getTournamentList();
   }, []);
@@ -27,10 +33,13 @@ export default function HomeScreen() {
     return <Header>Loading</Header>;
   } else {
     return (
-      <div>
-        <Header h1>Home Screen</Header>
+      <Container>
+        <Divider hidden />
+        <Header inverted h1>
+          Home Screen
+        </Header>
         <Divider />
-        <List divided>
+        <List inverted divided>
           {results.map(({ state, title, type, _id }) => {
             return (
               <List.Item
@@ -38,7 +47,7 @@ export default function HomeScreen() {
                   history.push(`/tournament/${_id}`);
                 }}
               >
-                <List.Icon name="world" />
+                <List.Icon color="blue" name="world" />
                 <List.Content>
                   <List.Header as="a">{title}</List.Header>
                   <List.Description>
@@ -49,7 +58,7 @@ export default function HomeScreen() {
             );
           })}
         </List>
-      </div>
+      </Container>
     );
   }
 }
