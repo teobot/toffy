@@ -29,18 +29,21 @@ export default ({
     if (storageToken) {
       // token exists so needs testing
       try {
-        // Make test storage token request
-        await toffy.request({
+        // Make a request to gather the user information
+        const loginAttempt = await toffy.request({
           method: "get",
-          url: "/find",
+          url: "/user",
           headers: {
             Accept: "application/json",
             "X-Authorization": storageToken,
           },
         });
 
+        // Object destructor to gather username and user_id
+        const { username, user_id } = loginAttempt.data;
+
         // The token is valid, log the user in
-        handleUserLogin(storageToken);
+        handleUserLogin({ token: storageToken, username, user_id });
 
         // Push the user to the home screen
         // history.push("/home");
