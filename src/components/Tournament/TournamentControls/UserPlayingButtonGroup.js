@@ -1,26 +1,18 @@
-import React from "react";
+import React, { useContext } from "react";
+
 import { Button, Container, Segment } from "semantic-ui-react";
+
 import toffy from "../../../api/toffy";
+
+import { LoggedInContext } from "../../../context/LoggedInContext";
 
 export default function UserPlayingButtonGroup({
   tournamentData,
   getTournamentData,
 }) {
-  const {
-    created,
-    creator,
-    description,
-    isAdmin,
-    listed,
-    match_data,
-    players,
-    state,
-    title,
-    type,
-    __v,
-    _id,
-    userId,
-  } = tournamentData;
+  const { players, state, _id } = tournamentData;
+
+  const { user_id } = useContext(LoggedInContext);
 
   const handlePlayerJoin = async () => {
     //   Handle the user wanting to join the tournament
@@ -48,58 +40,24 @@ export default function UserPlayingButtonGroup({
     // This function returns true if the player is playing in the tournament
     for (let i = 0; i < players.length; i++) {
       const player = players[i];
-      if (player._id === userId) {
+      if (player._id === user_id) {
         return true;
       }
     }
   };
 
   if (state === "Joining") {
-    return (
-      <Container fluid textAlign="right">
-        {checkIfUserInsidePlayers() ? (
-          <Button negative onClick={handlePlayerLeave}>
-            Leave
-          </Button>
-        ) : (
-          <Button positive onClick={handlePlayerJoin}>
-            Join
-          </Button>
-        )}
-      </Container>
+    return checkIfUserInsidePlayers() ? (
+      <Button negative onClick={handlePlayerLeave}>
+        Leave
+      </Button>
+    ) : (
+      <Button positive onClick={handlePlayerJoin}>
+        Join
+      </Button>
     );
   } else {
     //   Tournament is either in playing or ending
     return null;
   }
 }
-
-// DUMMY TOURNAMENT INFORMATION
-// created: "2021-03-18T18:12:59.167Z"
-// creator: {_id: "603bfe693c9ff5230c4aecbc", username: "bonfire"}
-// description: "Global"
-// isAdmin: false
-// userId: "60551c3e3587235d184f3685"
-// listed: true
-// match_data: []
-// players: []
-// state: "Joining"
-// title: "open-source Licensed Concrete Bacon"
-// type: "Single Elimination"
-// __v: 0
-// _id: "6053982bbc068c03b4e9cd93"
-//
-// const {
-//     created,
-//     creator,
-//     description,
-//     isAdmin,
-//     listed,
-//     match_data,
-//     players,
-//     state,
-//     title,
-//     type,
-//     __v,
-//     _id,
-//   } = tournamentData;
