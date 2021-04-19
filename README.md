@@ -1,6 +1,6 @@
 <h1 align="center">Welcome to tournament-frontend 👋</h1>
 <p>
-  <img alt="Version" src="https://img.shields.io/badge/version-0.1.0-blue.svg?cacheSeconds=2592000" />
+  <img alt="Version" src="https://img.shields.io/badge/version-0.6.2-blue.svg?cacheSeconds=2592000" />
 </p>
 
 > The front-end of my mmu project
