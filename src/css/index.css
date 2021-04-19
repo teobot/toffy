@@ -1,13 +1,24 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+#tournamentMenu .active.item {
+  border-bottom-color: orange !important;
+  border-bottom-width: 4px;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+#tournamentMenu .item {
+  border-bottom-color: none;
+  border-bottom-width: 4px;
+}
+
+#tournamentMenu {
+  border-width: 0;
+}
+
+.settingTextArea,
+.settingInput input {
+  background-color: #1f232c !important;
+  color: lightgray !important;
+}
+
+.settingLabel {
+  color: grey;
+  padding: 5px 0px;
 }
