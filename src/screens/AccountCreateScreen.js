@@ -1,6 +1,6 @@
 import React, { useReducer, useContext } from "react";
 import { useHistory } from "react-router";
-import { Button, Form } from "semantic-ui-react";
+import { Button, Container, Divider, Form } from "semantic-ui-react";
 
 import toffy from "../api/toffy";
 
@@ -43,7 +43,7 @@ export default function AccountCreateScreen() {
       // account creation successful
 
       // Tell Context user has logged in
-      handleUserLogin(r.data.token);
+      handleUserLogin(r.data);
 
       // Push the user to the home screen
       history.push("/home");
@@ -58,7 +58,8 @@ export default function AccountCreateScreen() {
   };
 
   return (
-    <div>
+    <Container>
+      <Divider hidden />
       <h1>Account Creation</h1>
       <Form>
         <Form.Field>
@@ -120,6 +121,6 @@ export default function AccountCreateScreen() {
           Submit
         </Button>
       </Form>
-    </div>
+    </Container>
   );
 }
