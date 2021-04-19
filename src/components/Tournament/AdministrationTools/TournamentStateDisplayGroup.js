@@ -3,7 +3,7 @@ import { Icon, Step } from "semantic-ui-react";
 
 export default function TournamentStateDisplayGroup({ tournament }) {
   return (
-    <Step.Group size="mini">
+    <Step.Group fluid>
       <Step
         active={tournament.state === "Joining"}
         disabled={tournament.state !== "Joining"}
