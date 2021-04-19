@@ -2,7 +2,14 @@ import React, { useState, useContext, useEffect } from "react";
 
 import toffy from "../api/toffy";
 
-import { Container, Input, Header, Form, Button } from "semantic-ui-react";
+import {
+  Container,
+  Input,
+  Header,
+  Form,
+  Button,
+  Divider,
+} from "semantic-ui-react";
 
 import { useHistory } from "react-router-dom";
 
@@ -14,7 +21,7 @@ export default function LoginScreen() {
   const [email, setEmail] = useState("theoclapperton@outlook.com");
   const [password, setPassword] = useState("password");
   let history = useHistory();
-  const { handleUserLogin, TOKEN_STORAGE_NAME } = useContext(LoggedInContext);
+  const { handleUserLogin } = useContext(LoggedInContext);
 
   useEffect(() => {
     if (toffy.defaults.headers.common["X-Authorization"]) {
@@ -33,7 +40,7 @@ export default function LoginScreen() {
       });
 
       // Tell Context user has logged in
-      handleUserLogin(response.data.token);
+      handleUserLogin(response.data);
 
       // Push the user to the home screen
       history.push("/home");
@@ -53,8 +60,12 @@ export default function LoginScreen() {
 
   return (
     <Container>
-      <Header>Login</Header>
-      <Form>
+      <Divider hidden />
+
+      <Header inverted as="h1">
+        Login
+      </Header>
+      <Form inverted>
         <Form.Field>
           <label>Email</label>
           <Input
