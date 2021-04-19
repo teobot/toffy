@@ -39,7 +39,7 @@
 [ ] Add new list of user owned tournaments
 
 ## Development Update Documentation
-### 19/04/2021  - 0.7.1
+### 19/04/2021  - 0.6.2
 - Updated dependencies
 - Index.html: Added backgroundColor on html body
 - index.js: Changed css import order, Added create/view tournament screen and view user screen
