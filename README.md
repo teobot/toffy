@@ -1,6 +1,6 @@
 <h1 align="center">Welcome to tournament-frontend 👋</h1>
 <p>
-  <img alt="Version" src="https://img.shields.io/badge/version-0.6.2-blue.svg?cacheSeconds=2592000" />
+  <img alt="Version" src="https://img.shields.io/badge/version-0.7.0-blue.svg?cacheSeconds=2592000" />
 </p>
 
 > The front-end of my mmu project
@@ -12,10 +12,27 @@
   npm install
 ```
 
-## Starting Development
+## Development
 ```javascript
   yarn start
 ```
+
+## Adding New Routes
+1. Create the new screen and place file inside `./src/screens/`
+2. Inside `./src/index.js`, import and add a new object to the array, such as below
+```javascript
+{
+  routeName: "RouteName",
+  routerComponent: <ComponentName />,
+},
+```
+
+## Adding new Tournament types
+1. Follow the instructions on the backend first to setup a type for the server
+2. Create the tournament display and place it inside `./src/components/Tournament/TournamentDisplays/`
+3. Goto `./src/screens/TournamentScreen.js` and import the new display
+4. Add the display to the `MatchDisplayComponent` function by adding a `if` statement based on the tournament type
+   1. Search for `TD5` for the correct placement function 
 
 ## Resources
 - https://www.npmjs.com/package/react-d3-tree
@@ -34,12 +51,25 @@
 [x] Add new Leaderboard Tournament Type
 [ ] Add ability to message users
 [x] Add Tournament Edit tools
-[ ] Add user Edit tools
+[x] Add user Edit tools
 [ ] Update the look of the matches on the UserScreen
 [ ] Add new list of user owned tournaments
 
 ## Development Update Documentation
-### 19/04/2021  - 0.6.2
+### 20/04/2021 - DEPLOYED - 0.7.0
+- Updated dev auto startup
+- Added new user edit screen
+- toffy: Added dev and deployment modes
+- navbar: Capitalized menu items
+- tournamentConfig: Added authorized profile images
+- LoggedInContext: Added setUsername to context export
+- Changed CSS files
+- Added difference function
+- CreateTournamentScreen: Major UI/UX changes to tournament creation
+- TournamentScreen: Added comments
+- UserScreen: Added profile edit button
+
+### 19/04/2021 - 0.6.2
 - Updated dependencies
 - Index.html: Added backgroundColor on html body
 - index.js: Changed css import order, Added create/view tournament screen and view user screen
