@@ -13,7 +13,9 @@
 }
 
 .settingTextArea,
-.settingInput input {
+.settingInput input,
+.settingDropdown.ui.selection.dropdown,
+.settingDropdown .item {
   background-color: #1f232c !important;
   color: lightgray !important;
 }
