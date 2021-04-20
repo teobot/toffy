@@ -53,6 +53,7 @@ export default () => {
       UserLoggedIn,
       handleLogout,
       handleUserLogin,
+      setUsername,
       token,
       username,
       user_id,
