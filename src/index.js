@@ -21,8 +21,13 @@ import CreateTournamentScreen from "./screens/CreateTournamentScreen";
 import useLoginContext, { LoggedInContext } from "./context/LoggedInContext";
 
 import RedirectLogin from "./functions/redirectLogin";
+import UserEditScreen from "./screens/UserEditScreen";
 
 const routes = [
+  {
+    routeName: "/u/:_id/edit",
+    routerComponent: <UserEditScreen />,
+  },
   {
     routeName: "/create/tournament",
     routerComponent: <CreateTournamentScreen />,
