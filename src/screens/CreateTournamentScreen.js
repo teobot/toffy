@@ -5,15 +5,17 @@ import {
   Divider,
   Form,
   Header,
-  Checkbox,
+  Input,
   Button,
   Segment,
   Dropdown,
+  TextArea,
 } from "semantic-ui-react";
 
 import { tournament_types } from "../components/Tournament/TournamentConfig";
 
 import toffy from "../api/toffy";
+
 import { useHistory } from "react-router";
 
 const reducer = (state, action) => {
@@ -42,6 +44,15 @@ export default function CreateTournamentScreen() {
     scoreTitle: "",
   });
 
+  const inputStyle = {
+    width: "100%",
+    maxWidth: 450,
+  };
+
+  const settingContainerStyle = {
+    marginBottom: 40,
+  };
+
   let history = useHistory();
 
   const handleInputChange = (event, type) => {
@@ -65,74 +76,109 @@ export default function CreateTournamentScreen() {
 
   return (
     <Container>
-      <Divider hidden />
-      <Header inverted>Create Tournament Screen</Header>
+      <Segment basic>
+        <Header style={{ color: "lightgrey" }} as="h2">
+          <Header.Content>
+            Create Tournament
+            <Header.Subheader style={{ color: "lightgrey" }}>
+              Create a new tournament
+            </Header.Subheader>
+          </Header.Content>
+        </Header>
+      </Segment>
 
-      <Segment inverted raised>
-        <Form inverted>
-          <Form.Field>
-            <label>Title</label>
-            <input
-              value={state.title}
-              placeholder="Title"
-              onChange={(event) => {
-                handleInputChange(event, "change_title");
-              }}
-            />
-          </Form.Field>
-          <Form.Field>
-            <label>Description</label>
-            <input
+      <Segment basic>
+        <div style={settingContainerStyle}>
+          <Header as="h4" style={{ color: "lightgrey" }}>
+            <Header.Content>Title</Header.Content>
+          </Header>
+          <Input
+            onChange={(event, data) => {
+              dispatch({ type: "change_title", payload: data.value });
+            }}
+            style={inputStyle}
+            value={state.title}
+            className="settingInput"
+          />
+          <div className="settingLabel"></div>
+        </div>
+
+        <div style={settingContainerStyle}>
+          <Header as="h4" style={{ color: "lightgrey" }}>
+            <Header.Content>Description</Header.Content>
+          </Header>
+          <Form>
+            <TextArea
+              rows={5}
               value={state.description}
-              placeholder="Description"
+              placeholder="Talk about rules, player respect, ethics..."
               onChange={(event) => {
                 handleInputChange(event, "change_description");
               }}
+              className="settingTextArea"
             />
-          </Form.Field>
+          </Form>
+          <div className="settingLabel">
+            here you can convey important information to the users wanting to
+            join your tournament, talk about rules.
+          </div>
+        </div>
 
-          <Form.Field>
-            <label>Tournament Type</label>
-            <Dropdown
-              placeholder="Select Tournament Type"
-              fluid
-              search
-              selection
-              defaultValue={state.type}
-              onChange={onTypeChange}
-              options={[
-                {
-                  key: tournament_types.LEADERBOARD,
-                  value: tournament_types.LEADERBOARD,
-                  text: tournament_types.LEADERBOARD,
-                },
-                {
-                  key: tournament_types.SINGLE_ELIMINATION,
-                  value: tournament_types.SINGLE_ELIMINATION,
-                  text: tournament_types.SINGLE_ELIMINATION,
-                },
-              ]}
-            />
-          </Form.Field>
+        <div style={settingContainerStyle}>
+          <Header as="h4" style={{ color: "lightgrey" }}>
+            <Header.Content>Type</Header.Content>
+          </Header>
+          <Dropdown
+            className="settingDropdown"
+            style={inputStyle}
+            placeholder="Select Tournament Type"
+            selection
+            defaultValue={state.type}
+            onChange={onTypeChange}
+            options={[
+              {
+                key: tournament_types.LEADERBOARD,
+                value: tournament_types.LEADERBOARD,
+                text: tournament_types.LEADERBOARD,
+              },
+              {
+                key: tournament_types.SINGLE_ELIMINATION,
+                value: tournament_types.SINGLE_ELIMINATION,
+                text: tournament_types.SINGLE_ELIMINATION,
+              },
+            ]}
+          />
+          <div className="settingLabel"></div>
+        </div>
 
+        <Form inverted>
           {state.type === tournament_types.LEADERBOARD ? (
-            <>
-              <Form.Field>
-                <label>Leaderboard Scoring By</label>
-                <input
-                  value={state.scoreTitle}
-                  placeholder="Leaderboard Scoring By"
-                  onChange={(event) => {
-                    handleInputChange(event, "change_scoreTitle");
-                  }}
-                />
-              </Form.Field>
-            </>
+            <div style={settingContainerStyle}>
+              <Header as="h4" style={{ color: "lightgrey" }}>
+                <Header.Content>Leaderboard scoring field</Header.Content>
+              </Header>
+              <Input
+                value={state.scoreTitle}
+                onChange={(event) => {
+                  handleInputChange(event, "change_scoreTitle");
+                }}
+                style={inputStyle}
+                className="settingInput"
+              />
+              <div className="settingLabel">
+                this is what each player is scored on, if the tournament is a
+                speedrun this might be `time` or if its a free-for-all it might
+                be `kills`
+              </div>
+            </div>
           ) : null}
 
-          <Button positive onClick={handleFormSubmit} type="submit">
-            Submit
-          </Button>
+          <div style={{ marginBottom: 15 }}>
+            <Button positive onClick={handleFormSubmit} primary>
+              Update profile
+            </Button>
+            <div className="settingLabel">make the new tournament</div>
+          </div>
         </Form>
       </Segment>
     </Container>
