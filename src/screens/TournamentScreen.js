@@ -52,6 +52,7 @@ export default function TournamentScreen() {
   }, []);
 
   const MatchDataDisplayComponent = (type, match_data, isAdmin) => {
+    // This determines which tournament display to use: TD5
     if (result.match_data === undefined || result.match_data.length === 0) {
       return (
         <>
