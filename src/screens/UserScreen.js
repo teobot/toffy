@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 
-import { useParams } from "react-router";
+import { useHistory, useParams } from "react-router";
 
 import {
   Button,
@@ -29,9 +29,9 @@ export default function UserScreen() {
 
   const [user, setUser] = useState(null);
 
-  const { windowWidth, windowHeight } = useWindowWidth();
+  const { windowHeight } = useWindowWidth();
 
-  const { token, username, user_id } = useContext(LoggedInContext);
+  const { user_id } = useContext(LoggedInContext);
 
   useEffect(() => {
     getUserInformation();
@@ -84,7 +84,18 @@ export default function UserScreen() {
                 </Header>
               </Grid.Column>
               <Grid.Column width={8}>
-                <Button floated="right">Message</Button>
+                {user._id === user_id ? (
+                  <Button
+                    as="a"
+                    href={`/u/${_id}/edit`}
+                    primary
+                    floated="right"
+                  >
+                    Edit Profile
+                  </Button>
+                ) : (
+                  <Button floated="right">Message</Button>
+                )}
               </Grid.Column>
             </Grid.Row>
           </Grid>
