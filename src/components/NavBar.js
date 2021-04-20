@@ -34,7 +34,7 @@ export default function NavBar({ routes }) {
               }
             }}
             link
-            name="home"
+            name="Home"
           />
 
           {UserLoggedIn ? (
@@ -44,7 +44,7 @@ export default function NavBar({ routes }) {
                   history.push("/create/tournament");
                 }}
                 link
-                name="create tournament"
+                name="Create"
               />
             </>
           ) : null}
