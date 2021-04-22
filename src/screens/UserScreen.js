@@ -23,15 +23,19 @@ import calculateCreated from "../functions/calculateCreated";
 import ChartSegment from "../components/User/ChartSegment";
 
 import { LoggedInContext } from "../context/LoggedInContext";
+import { ToastContext } from "../context/ToastContext";
 
 export default function UserScreen() {
   let { _id } = useParams();
 
   const [user, setUser] = useState(null);
 
+  let history = useHistory();
+
   const { windowHeight } = useWindowWidth();
 
   const { user_id } = useContext(LoggedInContext);
+  const { showToast } = useContext(ToastContext);
 
   useEffect(() => {
     getUserInformation();
@@ -41,10 +45,12 @@ export default function UserScreen() {
     // This method gathers the user information
     try {
       const user = await toffy.get(`/user/${_id}`);
-      console.log(user.data);
       setUser(user.data);
     } catch (error) {
-      console.log(error);
+      // : error getting the user information
+      showToast("error", error.response.data.error);
+      // Force the user back
+      history.push("/home");
     }
   };
 
