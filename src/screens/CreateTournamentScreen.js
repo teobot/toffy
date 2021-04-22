@@ -177,8 +177,8 @@ export default function CreateTournamentScreen() {
           ) : null}
 
           <div style={{ marginBottom: 15 }}>
-            <Button positive onClick={handleFormSubmit} primary>
-              Update profile
+            <Button onClick={handleFormSubmit} color="orange" size="huge">
+              CREATE TOURNAMENT
             </Button>
             <div className="settingLabel">make the new tournament</div>
           </div>
