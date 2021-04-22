@@ -30,7 +30,14 @@ function TableRow({ cell1, cell2, cell3, widths }) {
   );
 }
 
-function LeaderboardTableRow({ player, score, index, tournament_id, history }) {
+function LeaderboardTableRow({
+  history,
+  index,
+  tournament_id,
+  player,
+  score,
+  getTournamentData,
+}) {
   const [playerScore, setPlayerScore] = useState(score);
 
   const { showToast } = useContext(ToastContext);
@@ -40,6 +47,8 @@ function LeaderboardTableRow({ player, score, index, tournament_id, history }) {
       const r = await toffy.patch(`/update/${tournament_id}/${player._id}`, {
         score: playerScore,
       });
+      showToast("success", "Updated player score");
+      getTournamentData()
     } catch (error) {
       // : failed saving a user score
       showToast("error", "Failed to save score, try again later.");
