@@ -24,3 +24,32 @@
   color: grey;
   padding: 5px 0px;
 }
+
+.fade-image {
+  -webkit-mask-image: -webkit-gradient(
+    linear,
+    left top,
+    left bottom,
+    from(rgba(0, 0, 0, 1)),
+    to(rgba(0, 0, 0, 0))
+  );
+  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
+}
+
+.image-back {
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+.text-shadow {
+  text-shadow: 2px 1px black;
+}
+
+.ellipsis {
+  text-overflow: ellipsis;
+
+  /* Required for text-overflow to do anything */
+  white-space: nowrap;
+  overflow: hidden;
+}
