@@ -16,34 +16,37 @@ import TournamentSearchCard from "../components/Tournament/TournamentSearch/Tour
 import { states } from "../components/Tournament/TournamentConfig";
 
 export default function HomeScreen() {
+  const resultSort = [
+    {
+      state: "/",
+      title: "All",
+    },
+    {
+      state: states.JOIN,
+      title: "Players Joining",
+    },
+    {
+      state: states.PLAY,
+      title: "In Progress",
+    },
+    {
+      state: states.END,
+      title: "Ended",
+    },
+  ];
   const [results, setResults] = useState([]);
+  const [playerResults, setPlayerResults] = useState([]);
+  const [sortingBy, setSortingBy] = useState(resultSort[0]);
+  const [playerJoinedSort, setPlayerJoinedSort] = useState(false);
 
   let history = useHistory();
 
   const { windowWidth, windowHeight } = useContext(WindowContext);
   const { showToast } = useContext(ToastContext);
 
-  const resultSort = [
-    {
-      type: "",
-      title: "All",
-    },
-    {
-      type: states.JOIN,
-      title: "Joining",
-    },
-    {
-      type: states.PLAY,
-      title: "In Progress",
-    },
-    {
-      type: states.END,
-      title: "Ended",
-    },
-  ];
-
   useEffect(() => {
     getTournamentList();
+    getPlayerJoinedTournaments();
   }, []);
 
   const getTournamentList = async () => {
@@ -56,10 +59,23 @@ export default function HomeScreen() {
     }
   };
 
-  const getNumberOfTournamentType = (type) => {
+  const getPlayerJoinedTournaments = async () => {
+    try {
+      const r = await toffy.get("/find/joined");
+      setPlayerResults(r.data);
+    } catch (error) {
+      // : error getting the tournament list data
+      showToast("error", "Failed to retrieve data, please try again later");
+    }
+  };
+
+  const getNumberOfTournamentType = (state) => {
+    if (state === "/") {
+      return results.length;
+    }
     let num = 0;
     for (let i = 0; i < results.length; i++) {
-      if (results[i].type === type) {
+      if (results[i].state === state) {
         num++;
       }
     }
@@ -78,14 +94,48 @@ export default function HomeScreen() {
       <Grid inverted stretched>
         {resultSort.map((search) => {
           return (
-            <Grid.Row columns="equal">
+            <Grid.Row
+              onClick={() => {
+                setSortingBy(search);
+                setPlayerJoinedSort(false);
+              }}
+              className="sort-row"
+              columns="equal"
+              style={{
+                color: "lightgrey",
+                fontSize: 12,
+                ...(sortingBy.title === search.title
+                  ? { backgroundColor: "#121212" }
+                  : {}),
+              }}
+            >
               <Grid.Column textAlign="left">{search.title}</Grid.Column>
               <Grid.Column textAlign="right">{`(${getNumberOfTournamentType(
-                search.type
+                search.state
               )})`}</Grid.Column>
             </Grid.Row>
           );
         })}
+        <Divider />
+        <Grid.Row
+          onClick={() => {
+            setSortingBy({
+              state: "",
+              title: "",
+            });
+            setPlayerJoinedSort(true);
+          }}
+          className="sort-row"
+          columns="equal"
+          style={{
+            color: "lightgrey",
+            fontSize: 12,
+            ...(playerJoinedSort ? { backgroundColor: "#121212" } : {}),
+          }}
+        >
+          <Grid.Column textAlign="left">Joined</Grid.Column>
+          <Grid.Column textAlign="right">{`(${playerResults.length})`}</Grid.Column>
+        </Grid.Row>
       </Grid>
     </Grid.Column>
   );
@@ -133,11 +183,28 @@ export default function HomeScreen() {
           >
             {results.length > 0 ? (
               <Segment.Group>
-                {results.map((result, index) => {
-                  return (
-                    <TournamentSearchCard result={result} history={history} />
-                  );
-                })}
+                {playerJoinedSort
+                  ? playerResults.map((result, index) => {
+                      return (
+                        <TournamentSearchCard
+                          result={result}
+                          history={history}
+                        />
+                      );
+                    })
+                  : results.map((result, index) => {
+                      if (sortingBy.state !== "/") {
+                        if (sortingBy.state !== result.state) {
+                          return null;
+                        }
+                      }
+                      return (
+                        <TournamentSearchCard
+                          result={result}
+                          history={history}
+                        />
+                      );
+                    })}
               </Segment.Group>
             ) : (
               <Segment inverted textAlign="center">
