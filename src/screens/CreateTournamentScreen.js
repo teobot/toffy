@@ -1,4 +1,4 @@
-import React, { useReducer } from "react";
+import React, { useReducer, useContext } from "react";
 
 import {
   Container,
@@ -17,6 +17,8 @@ import { tournament_types } from "../components/Tournament/TournamentConfig";
 import toffy from "../api/toffy";
 
 import { useHistory } from "react-router";
+
+import { ToastContext } from "../context/ToastContext";
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -44,6 +46,8 @@ export default function CreateTournamentScreen() {
     scoreTitle: "",
   });
 
+  const { showToast } = useContext(ToastContext);
+
   const inputStyle = {
     width: "100%",
     maxWidth: 450,
@@ -64,13 +68,12 @@ export default function CreateTournamentScreen() {
   };
 
   const handleFormSubmit = async () => {
-    console.log(state);
     try {
       const response = await toffy.post("/create", state);
-      console.log(response.data);
       history.push(`/tournament/${response.data}`);
     } catch (error) {
-      console.log(error);
+      // : error in creating the tournament
+      showToast("error", "Something went wrong, please try again later.");
     }
   };
 
