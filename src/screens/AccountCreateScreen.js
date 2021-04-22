@@ -1,10 +1,25 @@
-import React, { useReducer, useContext } from "react";
+import React, { useReducer, useContext, useState, useEffect } from "react";
+
 import { useHistory } from "react-router";
-import { Button, Container, Divider, Form } from "semantic-ui-react";
+
+import {
+  Button,
+  Container,
+  Divider,
+  Form,
+  Grid,
+  Header,
+  Input,
+} from "semantic-ui-react";
 
 import toffy from "../api/toffy";
 
 import { LoggedInContext } from "../context/LoggedInContext";
+import { ToastContext } from "../context/ToastContext";
+
+import useWindowWidth from "../functions/useWindowWidth";
+
+import topImage from "../img/widescreen-019.jpg";
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -25,21 +40,35 @@ const reducer = (state, action) => {
 
 export default function AccountCreateScreen() {
   const [state, dispatch] = useReducer(reducer, {
-    username: "sap",
-    firstname: "Theo",
-    lastname: "Clapperton",
-    email: "placeholder@outlook.com",
-    password: "password",
+    username: "",
+    firstname: "",
+    lastname: "",
+    email: "",
+    password: "",
   });
 
-  const { handleUserLogin } = useContext(LoggedInContext);
+  const [sideImageSize, setSideImageSize] = useState(150);
 
   let history = useHistory();
 
-  const handleSubmit = async () => {
-    const r = await toffy.post("/signup", state);
+  const { handleUserLogin } = useContext(LoggedInContext);
+  const { showToast } = useContext(ToastContext);
 
-    if (r.status === 200) {
+  let { windowWidth, windowHeight } = useWindowWidth();
+
+  useEffect(() => {
+    if (toffy.defaults.headers.common["X-Authorization"]) {
+      // Toffy has header so redirect
+      history.push("/home");
+    }
+    setSideImageSize(document.getElementById("navbar").clientHeight + 50);
+  }, []);
+
+  const handleSubmit = async () => {
+    // Handle submit of player information
+    try {
+      // make the account post
+      const r = await toffy.post("/signup", state);
       // account creation successful
 
       // Tell Context user has logged in
@@ -47,9 +76,8 @@ export default function AccountCreateScreen() {
 
       // Push the user to the home screen
       history.push("/home");
-    } else {
-      // TODO: account creation has failed
-      console.log(r);
+    } catch (error) {
+      showToast("error", error.response.data.error);
     }
   };
 
@@ -57,70 +85,151 @@ export default function AccountCreateScreen() {
     dispatch({ type, payload: event.target.value });
   };
 
+  const imageCoverStyle = {
+    backgroundSize: "cover",
+    backgroundRepeat: "no-repeat",
+    backgroundPosition: `${windowWidth > 650 ? "center" : "top"} center`,
+  };
+
   return (
-    <Container>
-      <Divider hidden />
-      <h1>Account Creation</h1>
-      <Form>
-        <Form.Field>
-          <label>username</label>
-          <input
-            value={state.username}
-            placeholder="username"
-            onChange={(event) => {
-              handleInputChange(event, "change_username");
-            }}
-          />
-        </Form.Field>
+    <>
+      <Grid>
+        <Grid.Row>
+          <Grid.Column
+            computer={6}
+            largeScreen={6}
+            mobile={16}
+            widescreen={6}
+            tablet={6}
+            width={6}
+          >
+            <div
+              style={{
+                width: "100%",
+                height: "100%",
+                backgroundColor: "lavender",
+                display: "flex",
+                minHeight:
+                  windowWidth > 650
+                    ? windowHeight - sideImageSize
+                    : windowHeight / 4,
+                ...imageCoverStyle,
+                backgroundImage: `url(${topImage})`,
+              }}
+              className="fade-image"
+            />
+          </Grid.Column>
+          <Grid.Column
+            computer={10}
+            largeScreen={10}
+            mobile={16}
+            widescreen={10}
+            tablet={10}
+            width={10}
+          >
+            <div
+              style={{
+                display: "flex",
+                width: "100%",
+                height: "100%",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Container text style={{ padding: `0px ${windowWidth / 15}px` }}>
+                <Header inverted style={{ fontSize: 16 + windowWidth / 60 }}>
+                  <Header.Content>
+                    Sign Up
+                    <Header.Subheader>
+                      Get started today, by entering you details below.
+                    </Header.Subheader>
+                  </Header.Content>
+                </Header>
+                <Divider section />
+                <div>
+                  <div>
+                    <Input
+                      placeholder="Username"
+                      onChange={(event) => {
+                        handleInputChange(event, "change_username");
+                      }}
+                      value={state.username}
+                      className="settingInput"
+                      fluid
+                    />
+                  </div>
+                  <Divider hidden />
+                  <div>
+                    <Input
+                      placeholder="Firstname"
+                      onChange={(event) => {
+                        handleInputChange(event, "change_firstname");
+                      }}
+                      value={state.firstname}
+                      className="settingInput"
+                      fluid
+                    />
+                  </div>
 
-        <Form.Field>
-          <label>First Name</label>
-          <input
-            onChange={(event) => {
-              handleInputChange(event, "change_firstname");
-            }}
-            value={state.firstname}
-            placeholder="First Name"
-          />
-        </Form.Field>
+                  <Divider hidden />
+                  <div>
+                    <Input
+                      placeholder="Lastname"
+                      onChange={(event) => {
+                        handleInputChange(event, "change_lastname");
+                      }}
+                      value={state.lastname}
+                      className="settingInput"
+                      fluid
+                    />
+                  </div>
 
-        <Form.Field>
-          <label>lastname</label>
-          <input
-            placeholder="lastname"
-            onChange={(event) => {
-              handleInputChange(event, "change_lastname");
-            }}
-            value={state.lastname}
-          />
-        </Form.Field>
+                  <Divider hidden />
+                  <div>
+                    <Input
+                      placeholder="Email"
+                      onChange={(event) => {
+                        handleInputChange(event, "change_email");
+                      }}
+                      value={state.email}
+                      className="settingInput"
+                      fluid
+                    />
+                  </div>
 
-        <Form.Field>
-          <label>email</label>
-          <input
-            placeholder="email"
-            onChange={(event) => {
-              handleInputChange(event, "change_email");
-            }}
-            value={state.email}
-          />
-        </Form.Field>
+                  <Divider hidden />
+                  <div>
+                    <Input
+                      placeholder="Password"
+                      onChange={(event) => {
+                        handleInputChange(event, "change_password");
+                      }}
+                      value={state.password}
+                      className="settingInput"
+                      fluid
+                      type="password"
+                    />
+                  </div>
 
-        <Form.Field>
-          <label>password</label>
-          <input
-            placeholder="password"
-            onChange={(event) => {
-              handleInputChange(event, "change_password");
-            }}
-            value={state.password}
-          />
-        </Form.Field>
-
-        <Button onClick={handleSubmit} type="submit">
-          Submit
-        </Button>
-      </Form>
-    </Container>
+                  <Divider hidden />
+                  <div>
+                    <a href="/login">Already have a account?</a>
+                  </div>
+                  <Divider section={windowWidth > 650} />
+                  <Button
+                    size={windowWidth > 650 ? "huge" : "large"}
+                    fluid
+                    onClick={handleSubmit}
+                    color="orange"
+                  >
+                    CREATE ACCOUNT
+                  </Button>
+                </div>
+              </Container>
+            </div>
+          </Grid.Column>
+        </Grid.Row>
+      </Grid>
+    </>
   );
 }
