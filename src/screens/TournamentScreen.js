@@ -1,24 +1,16 @@
 import React, { useContext, useEffect, useState } from "react";
 
-import calculateCreated, {
-  displayDate,
-  displayState,
-} from "../functions/calculateCreated";
+import { displayDate, displayState } from "../functions/calculateCreated";
 
 import { useHistory, useParams } from "react-router";
 import {
-  Button,
   Container,
   Divider,
   Grid,
   Header,
   Icon,
   Image,
-  Label,
-  List,
-  Menu,
   Segment,
-  Tab,
 } from "semantic-ui-react";
 
 import toffy from "../api/toffy";
