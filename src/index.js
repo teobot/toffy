@@ -8,7 +8,7 @@ import "./css/index.css";
 
 import NavBar from "./components/NavBar";
 
-import { Container, Divider } from "semantic-ui-react";
+import { Divider } from "semantic-ui-react";
 
 import LoginScreen from "./screens/LoginScreen";
 import HomeScreen from "./screens/HomeScreen";
@@ -19,6 +19,8 @@ import UserScreen from "./screens/UserScreen";
 import CreateTournamentScreen from "./screens/CreateTournamentScreen";
 
 import useLoginContext, { LoggedInContext } from "./context/LoggedInContext";
+import useWindowContext, { WindowContext } from "./context/WindowContext";
+import useToastContext, { ToastContext } from "./context/ToastContext";
 
 import RedirectLogin from "./functions/redirectLogin";
 import UserEditScreen from "./screens/UserEditScreen";
@@ -49,37 +51,50 @@ const routes = [
     routerComponent: <LoginScreen />,
   },
   {
-    routeName: "/landing",
-    routerComponent: <LandingScreen />,
+    routeName: "/home",
+    routerComponent: <HomeScreen />,
   },
   {
     routeName: "/",
-    routerComponent: <HomeScreen />,
+    routerComponent: <LandingScreen />,
   },
 ];
 
 function App() {
   // Context inits
   const [LoginContext] = useLoginContext();
+  const [WindowContextValues] = useWindowContext();
+  const [ToastContainer, ToastValues] = useToastContext();
 
   RedirectLogin(LoginContext);
 
   return (
-    <LoggedInContext.Provider value={LoginContext}>
-      <div>
-        <NavBar routes={routes} />
-        <div>
-          <Switch>
-            {routes.map((route) => {
-              return (
-                <Route path={route.routeName}>{route.routerComponent}</Route>
-              );
-            })}
-          </Switch>
-        </div>
-      </div>
-      <Divider section />
-    </LoggedInContext.Provider>
+    <WindowContext.Provider value={WindowContextValues}>
+      <ToastContext.Provider value={ToastValues}>
+        <LoggedInContext.Provider value={LoginContext}>
+          <div>
+            <NavBar routes={routes} />
+            <div>
+              <Switch>
+                {routes.map((route) => {
+                  return (
+                    <Route path={route.routeName}>
+                      {route.routerComponent}
+                    </Route>
+                  );
+                })}
+              </Switch>
+            </div>
+          </div>
+          {!["/", "/login", "/create/account"].includes(
+            window.location.pathname
+          ) ? (
+            <Divider section />
+          ) : null}
+          {ToastContainer}
+        </LoggedInContext.Provider>
+      </ToastContext.Provider>
+    </WindowContext.Provider>
   );
 }
 
