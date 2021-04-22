@@ -5,7 +5,7 @@
 
 > The front-end of my mmu project
 
-### 🏠 [Homepage](placeholder)
+### 🏠 [Homepage](https://teobot.github.io/toffy/)
 
 ## Install
 ```javascript
