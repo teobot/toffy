@@ -2,21 +2,13 @@ import React, { useContext } from "react";
 
 import { useHistory } from "react-router-dom";
 
-import {
-  Container,
-  Segment,
-  Button,
-  Image,
-  Grid,
-  Dropdown,
-  Menu,
-} from "semantic-ui-react";
+import { Segment, Button, Dropdown, Menu } from "semantic-ui-react";
 
 import { LoggedInContext } from "../context/LoggedInContext";
 
-export default function NavBar({ routes }) {
+export default function NavBar() {
   let history = useHistory();
-  const { UserLoggedIn, handleLogout, token, username, user_id } = useContext(
+  const { UserLoggedIn, handleLogout, username, user_id } = useContext(
     LoggedInContext
   );
   return (
