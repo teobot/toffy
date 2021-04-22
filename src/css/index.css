@@ -53,3 +53,8 @@
   white-space: nowrap;
   overflow: hidden;
 }
+
+.sort-row:hover {
+  background-color: #343a49;
+  color: black;
+}
