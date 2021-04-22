@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import calculateCreated, {
   displayDate,
@@ -34,16 +34,19 @@ import {
   states,
 } from "../components/Tournament/TournamentConfig";
 
-import useWindowWidth from "../functions/useWindowWidth";
 import TournamentPlayerDisplay from "../components/Tournament/TournamentDisplays/TournamentPlayerDisplay";
 import TournamentMenu from "../components/Tournament/TournamentMenu";
+
+import { WindowContext } from "../context/WindowContext";
+import { ToastContext } from "../context/ToastContext";
 
 export default function TournamentScreen() {
   let { _id, view } = useParams();
 
   let history = useHistory();
 
-  const { windowWidth, windowHeight } = useWindowWidth();
+  const { windowWidth, windowHeight } = useContext(WindowContext);
+  const { showToast } = useContext(ToastContext);
 
   const [result, setResult] = useState(null);
 
@@ -104,9 +107,14 @@ export default function TournamentScreen() {
     // This function gathers the tournament information
     try {
       const t = await toffy.get(`/tournament/${_id}`);
-      console.log(t.data);
       setResult(t.data);
-    } catch (error) {}
+    } catch (error) {
+      // : Failed getting the tournament information
+      showToast("error", "Tournament doesn't exist.");
+
+      // Send the user back to home screen
+      history.push("/home");
+    }
   };
 
   if (!_id) {
@@ -165,7 +173,7 @@ export default function TournamentScreen() {
                         />
                       </Segment>
                     </Segment.Group>
-                    <Segment.Group horizontal={windowWidth > 650}>
+                    <Segment.Group horizontal={windowWidth > 758}>
                       {[
                         {
                           title: `${result.players.length} Player${
@@ -187,7 +195,9 @@ export default function TournamentScreen() {
                           <Segment basic textAlign="left">
                             <Header inverted size="tiny">
                               <Icon size="tiny" fitted name={value.icon} />
-                              <Header.Content>{value.title}</Header.Content>
+                              <Header.Content style={{ fontSize: 12 }}>
+                                {value.title}
+                              </Header.Content>
                             </Header>
                           </Segment>
                         );
@@ -204,7 +214,7 @@ export default function TournamentScreen() {
                       alignItems: "center",
                     }}
                   >
-                    <Header as="h2" inverted>
+                    <Header as="h2" inverted textAlign="left">
                       <Image circular src={result.creator.profile_pic} />
                       <Header.Content>
                         <Header.Subheader>
