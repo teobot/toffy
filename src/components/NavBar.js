@@ -26,14 +26,14 @@ export default function NavBar() {
             />
           </Menu.Item>
 
-          {false ? (
+          {UserLoggedIn ? (
             <>
               <Menu.Item
                 onClick={() => {
-                  history.push("/create/tournament");
+                  history.push("/home");
                 }}
                 link
-                name="Tournament Creation"
+                name="Home"
               />
             </>
           ) : (
