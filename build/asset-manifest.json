@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/toffy/static/css/main.7e620109.chunk.css",
-    "main.js": "/toffy/static/js/main.95d21f7c.chunk.js",
-    "main.js.map": "/toffy/static/js/main.95d21f7c.chunk.js.map",
+    "main.js": "/toffy/static/js/main.8e41898d.chunk.js",
+    "main.js.map": "/toffy/static/js/main.8e41898d.chunk.js.map",
     "runtime-main.js": "/toffy/static/js/runtime-main.94169eea.js",
     "runtime-main.js.map": "/toffy/static/js/runtime-main.94169eea.js.map",
     "static/css/2.0a8dc2cd.chunk.css": "/toffy/static/css/2.0a8dc2cd.chunk.css",
@@ -13,20 +13,20 @@
     "static/css/main.7e620109.chunk.css.map": "/toffy/static/css/main.7e620109.chunk.css.map",
     "static/js/2.83da888e.chunk.js.LICENSE.txt": "/toffy/static/js/2.83da888e.chunk.js.LICENSE.txt",
     "static/media/semantic.min.css": "/toffy/static/media/outline-icons.ddae9b1b.woff",
-    "static/media/widescreen-014.48b3ea3d.jpg": "/toffy/static/media/widescreen-014.48b3ea3d.jpg",
-    "static/media/widescreen-015.bb72348b.jpg": "/toffy/static/media/widescreen-015.bb72348b.jpg",
-    "static/media/widescreen-016.b6148536.jpg": "/toffy/static/media/widescreen-016.b6148536.jpg",
-    "static/media/widescreen-017.d0047840.jpg": "/toffy/static/media/widescreen-017.d0047840.jpg",
-    "static/media/widescreen-018.3a9b6e27.jpg": "/toffy/static/media/widescreen-018.3a9b6e27.jpg",
-    "static/media/widescreen-019.356ab4f2.jpg": "/toffy/static/media/widescreen-019.356ab4f2.jpg",
-    "static/media/widescreen-020.09fe2cf5.jpg": "/toffy/static/media/widescreen-020.09fe2cf5.jpg",
-    "static/media/widescreen-021.7c2ef7bb.jpg": "/toffy/static/media/widescreen-021.7c2ef7bb.jpg"
+    "static/media/widescreen-014.d97bf6b2.jpg": "/toffy/static/media/widescreen-014.d97bf6b2.jpg",
+    "static/media/widescreen-015.aee439d4.jpg": "/toffy/static/media/widescreen-015.aee439d4.jpg",
+    "static/media/widescreen-016.10a08db8.jpg": "/toffy/static/media/widescreen-016.10a08db8.jpg",
+    "static/media/widescreen-017.967136be.jpg": "/toffy/static/media/widescreen-017.967136be.jpg",
+    "static/media/widescreen-018.6233aece.jpg": "/toffy/static/media/widescreen-018.6233aece.jpg",
+    "static/media/widescreen-019.3e3dbb63.jpg": "/toffy/static/media/widescreen-019.3e3dbb63.jpg",
+    "static/media/widescreen-020.7abd3768.jpg": "/toffy/static/media/widescreen-020.7abd3768.jpg",
+    "static/media/widescreen-021.218bb1ff.jpg": "/toffy/static/media/widescreen-021.218bb1ff.jpg"
   },
   "entrypoints": [
     "static/js/runtime-main.94169eea.js",
     "static/css/2.0a8dc2cd.chunk.css",
     "static/js/2.83da888e.chunk.js",
     "static/css/main.7e620109.chunk.css",
-    "static/js/main.95d21f7c.chunk.js"
+    "static/js/main.8e41898d.chunk.js"
   ]
 }
