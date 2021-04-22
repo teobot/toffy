@@ -7,7 +7,7 @@ import { useHistory, useLocation } from "react-router-dom";
 
 import StorageHelper from "../helpers/StorageHelper";
 
-const WHITELISTED_PATHS = ["/login", "/landing", "/create/account"];
+const WHITELISTED_PATHS = ["/login", "/", "/create/account"];
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default ({
