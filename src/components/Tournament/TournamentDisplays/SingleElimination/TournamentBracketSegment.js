@@ -32,6 +32,7 @@ const matchReducer = (state, action) => {
       return { ...state, player2Score: action.payload };
     case "reset":
       return {
+        ...state,
         player1Selected: false,
         player2Selected: false,
         player1Score: 0,
@@ -52,6 +53,7 @@ export default function RobinRoundDisplay({
   const Viewer = useRef(null);
   const { windowHeight } = useContext(WindowContext);
   const { showToast } = useContext(ToastContext);
+  const [loading, setLoading] = useState(false);
 
   const [state, dispatch] = useReducer(matchReducer, {
     player1Selected: false,
@@ -73,30 +75,31 @@ export default function RobinRoundDisplay({
   };
 
   const UpdateMatchDetails = async () => {
+    setLoading(true);
+    console.log(modelMatch);
     try {
-      const r = await toffy.patch(
-        `/tournament/${tournament_id}/match/${modelMatch._id}`,
-        {
-          winner: state.player1Selected
-            ? "player1"
-            : state.player2Selected
-            ? "player2"
-            : null,
-          scores: {
-            player1: state.player1Score,
-            player2: state.player2Score,
-          },
-        }
-      );
+      const r = await toffy.patch(`/match/${modelMatch._id}`, {
+        winner: state.player1Selected
+          ? "player1"
+          : state.player2Selected
+          ? "player2"
+          : null,
+        scores: {
+          player1: state.player1Score,
+          player2: state.player2Score,
+        },
+      });
 
       // Match update is successful
       setOpen(false);
+      dispatch({ type: "reset" });
       showToast("success", "Match updated.");
       await getTournamentData();
     } catch (error) {
       // : failed match update
       showToast("error", "Match update failed, try again later.");
     }
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -225,6 +228,7 @@ export default function RobinRoundDisplay({
           </Button>
           <Button
             disabled={!state.player2Selected && !state.player1Selected}
+            loading={loading}
             content="Save Changes"
             labelPosition="right"
             icon="checkmark"
