@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 
 import toffy from "../api/toffy";
-import axios from "axios";
 
 import { useHistory, useLocation } from "react-router-dom";
 
