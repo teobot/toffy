@@ -9,25 +9,38 @@ import {
   Form,
   Button,
   Divider,
+  Segment,
+  Grid,
 } from "semantic-ui-react";
 
 import { useHistory } from "react-router-dom";
 
-import StorageHelper from "../helpers/StorageHelper";
-
 import { LoggedInContext } from "../context/LoggedInContext";
+import { ToastContext } from "../context/ToastContext";
+
+import useWindowWidth from "../functions/useWindowWidth";
+
+import topImage from "../img/widescreen-020.jpg";
 
 export default function LoginScreen() {
-  const [email, setEmail] = useState("theoclapperton@outlook.com");
-  const [password, setPassword] = useState("password");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const [sideImageSize, setSideImageSize] = useState(150);
+
   let history = useHistory();
+
   const { handleUserLogin } = useContext(LoggedInContext);
+  const { showToast } = useContext(ToastContext);
+
+  let { windowWidth, windowHeight } = useWindowWidth();
 
   useEffect(() => {
     if (toffy.defaults.headers.common["X-Authorization"]) {
       // Toffy has header so redirect
       history.push("/home");
     }
+    setSideImageSize(document.getElementById("navbar").clientHeight + 50);
   }, []);
 
   const handleLogin = async () => {
@@ -42,11 +55,13 @@ export default function LoginScreen() {
       // Tell Context user has logged in
       handleUserLogin(response.data);
 
+      showToast("success", "Log in successful.");
+
       // Push the user to the home screen
       history.push("/home");
     } catch (error) {
-      // TODO: User failed logging in
-      console.log(error);
+      // : User failed logging in
+      showToast("error", error.response.data.error);
     }
   };
 
@@ -58,34 +73,107 @@ export default function LoginScreen() {
     setPassword(event.target.value);
   };
 
-  return (
-    <Container>
-      <Divider hidden />
+  const imageCoverStyle = {
+    backgroundSize: "cover",
+    backgroundRepeat: "no-repeat",
+    backgroundPosition: `${windowWidth > 650 ? "center" : "top"} center`,
+  };
 
-      <Header inverted as="h1">
-        Login
-      </Header>
-      <Form inverted>
-        <Form.Field>
-          <label>Email</label>
-          <Input
-            onChange={handleEmailChange}
-            value={email}
-            placeholder="Email..."
-          />
-        </Form.Field>
-        <Form.Field>
-          <label>Password</label>
-          <Input
-            onChange={handlePasswordChange}
-            value={password}
-            placeholder="Password..."
-          />
-        </Form.Field>
-        <Button onClick={handleLogin} type="submit">
-          Login
-        </Button>
-      </Form>
-    </Container>
+  return (
+    <>
+      <Grid>
+        <Grid.Row>
+          <Grid.Column
+            computer={6}
+            largeScreen={6}
+            mobile={16}
+            widescreen={6}
+            tablet={6}
+            width={6}
+          >
+            <div
+              style={{
+                width: "100%",
+                height: "100%",
+                backgroundColor: "lavender",
+                display: "flex",
+                minHeight:
+                  windowWidth > 650
+                    ? windowHeight - sideImageSize
+                    : windowHeight / 4,
+                ...imageCoverStyle,
+                backgroundImage: `url(${topImage})`,
+              }}
+              className="fade-image"
+            />
+          </Grid.Column>
+          <Grid.Column
+            computer={10}
+            largeScreen={10}
+            mobile={16}
+            widescreen={10}
+            tablet={10}
+            width={10}
+          >
+            <div
+              style={{
+                display: "flex",
+                width: "100%",
+                height: "100%",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Container text style={{ padding: `0px ${windowWidth / 15}px` }}>
+                <Header inverted style={{ fontSize: 16 + windowWidth / 60 }}>
+                  <Header.Content>
+                    Log in
+                    <Header.Subheader>
+                      Welcome back! Please enter your details below.
+                    </Header.Subheader>
+                  </Header.Content>
+                </Header>
+                <Divider section />
+                <div>
+                  <div>
+                    <Input
+                      placeholder="Email"
+                      onChange={handleEmailChange}
+                      value={email}
+                      className="settingInput"
+                      fluid
+                    />
+                  </div>
+                  <Divider hidden />
+                  <div>
+                    <Input
+                      placeholder="Password"
+                      onChange={handlePasswordChange}
+                      value={password}
+                      className="settingInput"
+                      fluid
+                      type="password"
+                    />
+                  </div>
+                  <Divider hidden />
+                  <div>
+                    <a href="/create/account">Don't have a account?</a>
+                  </div>
+                  <Divider section={windowWidth > 650} />
+                  <Button
+                    size={windowWidth > 650 ? "huge" : "large"}
+                    fluid
+                    onClick={handleLogin}
+                    color="orange"
+                  >
+                    Login
+                  </Button>
+                </div>
+              </Container>
+            </div>
+          </Grid.Column>
+        </Grid.Row>
+      </Grid>
+    </>
   );
 }
