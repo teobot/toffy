@@ -1,40 +1,39 @@
-import { Title } from "chart.js";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   Button,
   Divider,
   Form,
-  Grid,
   Header,
-  Icon,
   Input,
-  Label,
   Segment,
-  Step,
   TextArea,
 } from "semantic-ui-react";
 
 import toffy from "../../../api/toffy";
 
-import TournamentStateDisplayGroup from "./TournamentStateDisplayGroup";
-
 import { states } from "../TournamentConfig";
+
+import { ToastContext } from "../../../context/ToastContext";
 
 export default function AdminTools({ tournament, getTournamentData }) {
   const [tournamentTitle, setTournamentTitle] = useState(tournament.title);
+
   const [loading, setLoading] = useState(false);
+
   const [tournamentDescription, setTournamentDescription] = useState(
     tournament.description
   );
+
+  const { showToast } = useContext(ToastContext);
 
   const handleTournamentProgress = async () => {
     // Handle the user wanting to progress the tournament
     try {
       const r = await toffy.post(`/tournament/${tournament._id}/progress`);
       await getTournamentData();
-      console.log(r.data.message);
     } catch (error) {
-      // TODO: handle the progression on fail
+      // : handle the progression on fail
+      showToast("error", "Tournament progression failed.");
     }
   };
 
@@ -55,7 +54,8 @@ export default function AdminTools({ tournament, getTournamentData }) {
       // Update the tournament information
       await getTournamentData();
     } catch (error) {
-      console.log(error);
+      //  : failed updating the tournament
+      showToast("error", "Failed update, try again later.");
     }
     setLoading(false);
   };
