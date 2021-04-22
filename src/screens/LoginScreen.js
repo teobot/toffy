@@ -6,10 +6,8 @@ import {
   Container,
   Input,
   Header,
-  Form,
   Button,
   Divider,
-  Segment,
   Grid,
 } from "semantic-ui-react";
 
@@ -17,8 +15,7 @@ import { useHistory } from "react-router-dom";
 
 import { LoggedInContext } from "../context/LoggedInContext";
 import { ToastContext } from "../context/ToastContext";
-
-import useWindowWidth from "../functions/useWindowWidth";
+import { WindowContext } from "../context/WindowContext";
 
 import topImage from "../img/widescreen-020.jpg";
 
@@ -32,8 +29,7 @@ export default function LoginScreen() {
 
   const { handleUserLogin } = useContext(LoggedInContext);
   const { showToast } = useContext(ToastContext);
-
-  let { windowWidth, windowHeight } = useWindowWidth();
+  const { windowWidth, windowHeight } = useContext(WindowContext);
 
   useEffect(() => {
     if (toffy.defaults.headers.common["X-Authorization"]) {

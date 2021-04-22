@@ -6,7 +6,6 @@ import {
   Button,
   Container,
   Divider,
-  Form,
   Grid,
   Header,
   Input,
@@ -16,8 +15,7 @@ import toffy from "../api/toffy";
 
 import { LoggedInContext } from "../context/LoggedInContext";
 import { ToastContext } from "../context/ToastContext";
-
-import useWindowWidth from "../functions/useWindowWidth";
+import { WindowContext } from "../context/WindowContext";
 
 import topImage from "../img/widescreen-019.jpg";
 
@@ -53,8 +51,7 @@ export default function AccountCreateScreen() {
 
   const { handleUserLogin } = useContext(LoggedInContext);
   const { showToast } = useContext(ToastContext);
-
-  let { windowWidth, windowHeight } = useWindowWidth();
+  let { windowWidth, windowHeight } = useContext(WindowContext);
 
   useEffect(() => {
     if (toffy.defaults.headers.common["X-Authorization"]) {

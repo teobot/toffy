@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 
 import { Button, Grid, Header, Image, Segment } from "semantic-ui-react";
 
@@ -8,13 +8,12 @@ import tournamentypes from "../img/widescreen-016.jpg";
 import legendwidescreen from "../img/widescreen-017.jpg";
 import signupwidescreen from "../img/widescreen-018.jpg";
 
-import useWindowWidth from "../functions/useWindowWidth";
+import { WindowContext } from "../context/WindowContext";
 
 import toffy from "../api/toffy";
 
 export default function LandingScreen() {
-  let { windowWidth, windowHeight } = useWindowWidth();
-  const [statAttempts, setStatAttempts] = useState(0)
+  let { windowWidth, windowHeight } = useContext(WindowContext);
 
   const [stats, setStats] = useState(null);
 
@@ -24,7 +23,7 @@ export default function LandingScreen() {
     backgroundPosition: "center center",
   };
 
-  const delay = ms => new Promise(res => setTimeout(res, ms));
+  const delay = (ms) => new Promise((res) => setTimeout(res, ms));
 
   const getStats = async () => {
     // Get the toffy stats
@@ -33,8 +32,8 @@ export default function LandingScreen() {
       setStats(res.data);
     } catch (error) {
       // : Error getting stats
-      await delay(20000)
-      getStats()
+      await delay(20000);
+      getStats();
     }
   };
 

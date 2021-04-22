@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useReducer, useState } from "react";
 
-import { useHistory, useParams } from "react-router";
+import { useHistory } from "react-router";
 
 import {
   Container,
@@ -16,8 +16,7 @@ import toffy from "../api/toffy";
 
 import { LoggedInContext } from "../context/LoggedInContext";
 import { ToastContext } from "../context/ToastContext";
-
-import useWindowWidth from "../functions/useWindowWidth";
+import { WindowContext } from "../context/WindowContext";
 
 import { ALLOWED_PROFILE_IMAGES } from "../components/Tournament/TournamentConfig";
 
@@ -43,12 +42,11 @@ const reducer = (state, action) => {
 };
 
 export default function UserEditScreen() {
-  const { windowHeight } = useWindowWidth();
-
   let history = useHistory();
 
   const { setUsername, user_id } = useContext(LoggedInContext);
   const { showToast } = useContext(ToastContext);
+  const { windowHeight } = useContext(WindowContext);
 
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -79,10 +77,10 @@ export default function UserEditScreen() {
       setLoading(false);
       history.push(`/u/${user_id}`);
       setUsername(state.username);
-      showToast("success", "Profile updated.")
+      showToast("success", "Profile updated.");
     } catch (error) {
       // : Failed user information update
-      showToast("error", "Update failed, please try again later.")
+      showToast("error", "Update failed, please try again later.");
     }
     setLoading(false);
   };
@@ -95,8 +93,8 @@ export default function UserEditScreen() {
       dispatch({ type: "change_state", payload: userRes.data });
     } catch (error) {
       // : Failed to get user information
-      showToast("error", "User doesn't exist.")
-      history.push("/home")
+      showToast("error", "User doesn't exist.");
+      history.push("/home");
     }
   };
 

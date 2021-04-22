@@ -10,13 +10,10 @@ import {
   Header,
   Image,
   Label,
-  List,
   Segment,
 } from "semantic-ui-react";
 
 import toffy from "../api/toffy";
-
-import useWindowWidth from "../functions/useWindowWidth";
 
 import calculateCreated from "../functions/calculateCreated";
 
@@ -24,6 +21,7 @@ import ChartSegment from "../components/User/ChartSegment";
 
 import { LoggedInContext } from "../context/LoggedInContext";
 import { ToastContext } from "../context/ToastContext";
+import { WindowContext } from "../context/WindowContext";
 
 export default function UserScreen() {
   let { _id } = useParams();
@@ -32,8 +30,7 @@ export default function UserScreen() {
 
   let history = useHistory();
 
-  const { windowHeight } = useWindowWidth();
-
+  const { windowHeight } = useContext(WindowContext);
   const { user_id } = useContext(LoggedInContext);
   const { showToast } = useContext(ToastContext);
 
