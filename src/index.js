@@ -100,7 +100,7 @@ function App() {
 
 ReactDOM.render(
   <React.StrictMode>
-    <Router>
+    <Router basename="/toffy">
       <App />
     </Router>
   </React.StrictMode>,
