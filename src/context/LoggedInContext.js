@@ -5,8 +5,6 @@ import StorageHelper from "../helpers/StorageHelper";
 
 import toffy from "../api/toffy";
 
-import { useHistory } from "react-router";
-
 export const LoggedInContext = createContext();
 
 export const TOKEN_STORAGE_NAME = "@token";
@@ -25,8 +23,6 @@ export default () => {
   const [token, setToken] = useState(null);
   const [username, setUsername] = useState(null);
   const [user_id, setUser_id] = useState(null);
-
-  let history = useHistory();
 
   const handleLogout = () => {
     //   This handles the user logout
