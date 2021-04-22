@@ -4,26 +4,15 @@ import React, {
   createContext,
   useState,
   useReducer,
+  useContext,
 } from "react";
-import {
-  List,
-  Segment,
-  Label,
-  Divider,
-  Container,
-  Table,
-  Grid,
-  Header,
-  Modal,
-  Image,
-  Button,
-  Input,
-  Form,
-} from "semantic-ui-react";
+
+import { Divider, Grid, Header, Modal, Button, Input } from "semantic-ui-react";
+
+import { ToastContext } from "../../../../context/ToastContext";
+import { WindowContext } from "../../../../context/WindowContext";
 
 import { TOOL_AUTO, UncontrolledReactSVGPanZoom } from "react-svg-pan-zoom";
-
-import useWindowWidth from "../../../../functions/useWindowWidth";
 
 import Round from "./components/Round";
 
@@ -61,7 +50,8 @@ export default function RobinRoundDisplay({
   inProgress,
 }) {
   const Viewer = useRef(null);
-  const { windowWidth, windowHeight } = useWindowWidth();
+  const { windowHeight } = useContext(WindowContext);
+  const { showToast } = useContext(ToastContext);
 
   const [state, dispatch] = useReducer(matchReducer, {
     player1Selected: false,
@@ -99,13 +89,13 @@ export default function RobinRoundDisplay({
         }
       );
 
-      if (r.status === 200) {
-        // Match winner is successful
-        setOpen(false);
-        await getTournamentData();
-      }
+      // Match update is successful
+      setOpen(false);
+      showToast("success", "Match updated.");
+      await getTournamentData();
     } catch (error) {
-      console.log(error);
+      // : failed match update
+      showToast("error", "Match update failed, try again later.");
     }
   };
 
