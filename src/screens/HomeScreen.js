@@ -2,18 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 
 import { useHistory } from "react-router";
 
-import {
-  Button,
-  Container,
-  Divider,
-  Grid,
-  Header,
-  Icon,
-  Image,
-  Label,
-  List,
-  Segment,
-} from "semantic-ui-react";
+import { Button, Divider, Grid, Segment } from "semantic-ui-react";
 
 import toffy from "../api/toffy";
 
