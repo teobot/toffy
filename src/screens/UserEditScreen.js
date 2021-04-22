@@ -15,6 +15,7 @@ import {
 import toffy from "../api/toffy";
 
 import { LoggedInContext } from "../context/LoggedInContext";
+import { ToastContext } from "../context/ToastContext";
 
 import useWindowWidth from "../functions/useWindowWidth";
 
@@ -47,6 +48,7 @@ export default function UserEditScreen() {
   let history = useHistory();
 
   const { setUsername, user_id } = useContext(LoggedInContext);
+  const { showToast } = useContext(ToastContext);
 
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -77,8 +79,10 @@ export default function UserEditScreen() {
       setLoading(false);
       history.push(`/u/${user_id}`);
       setUsername(state.username);
+      showToast("success", "Profile updated.")
     } catch (error) {
-      console.log(error);
+      // : Failed user information update
+      showToast("error", "Update failed, please try again later.")
     }
     setLoading(false);
   };
@@ -89,7 +93,11 @@ export default function UserEditScreen() {
       const userRes = await toffy.get("/get/user");
       setUser(userRes.data);
       dispatch({ type: "change_state", payload: userRes.data });
-    } catch (error) {}
+    } catch (error) {
+      // : Failed to get user information
+      showToast("error", "User doesn't exist.")
+      history.push("/home")
+    }
   };
 
   useEffect(() => {
