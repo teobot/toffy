@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 
 import {
   Segment,
@@ -12,6 +12,8 @@ import {
 } from "semantic-ui-react";
 
 import toffy from "../../../../api/toffy";
+
+import { ToastContext } from "../../../../context/ToastContext";
 
 function TableRow({ cell1, cell2, cell3, widths }) {
   return (
@@ -30,13 +32,16 @@ function TableRow({ cell1, cell2, cell3, widths }) {
 function LeaderboardTableRow({ player, score, index, tournament_id }) {
   const [playerScore, setPlayerScore] = useState(score);
 
+  const { showToast } = useContext(ToastContext);
+
   const handleSave = async () => {
     try {
       const r = await toffy.patch(`/update/${tournament_id}/${player._id}`, {
         score: playerScore,
       });
     } catch (error) {
-      console.log(error);
+      // : failed saving a user score
+      showToast("error", "Failed to save score, try again later.");
       setPlayerScore(score);
     }
   };
