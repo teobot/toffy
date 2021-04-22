@@ -91,16 +91,15 @@ export default function UserScreen() {
                   <Button
                     as="a"
                     onClick={() => {
-                      history.push(`/u/${_id}/edit`)
+                      history.push(`/u/${_id}/edit`);
                     }}
                     primary
                     floated="right"
                   >
                     Edit Profile
                   </Button>
-                ) : (
-                  null // <Button floated="right">Message</Button>
-                )}
+                ) : null // <Button floated="right">Message</Button>
+                }
               </Grid.Column>
             </Grid.Row>
           </Grid>
