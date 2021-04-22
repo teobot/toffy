@@ -117,15 +117,6 @@ export default function TournamentScreen() {
     }
   };
 
-  if (!_id) {
-    // : The tournament _id param is missing
-    return (
-      <div>
-        Please go back to <a href="/home">home</a>
-      </div>
-    );
-  }
-
   if (result && view === "settings" && !result.isAdmin) {
     // User has tried to enter the settings screen but is not the admin
     history.push(`/tournament/${_id}`);
@@ -222,7 +213,9 @@ export default function TournamentScreen() {
                             Organized by
                           </div>
                           <a
-                            href={`/u/${result.creator._id}`}
+                            onClick={() => {
+                              history.push(`/u/${result.creator._id}`);
+                            }}
                             style={{
                               color: "orange",
                               fontWeight: "900",

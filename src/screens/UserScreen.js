@@ -90,7 +90,9 @@ export default function UserScreen() {
                 {user._id === user_id ? (
                   <Button
                     as="a"
-                    href={`/u/${_id}/edit`}
+                    onClick={() => {
+                      history.push(`/u/${_id}/edit`)
+                    }}
                     primary
                     floated="right"
                   >

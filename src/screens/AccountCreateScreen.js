@@ -210,7 +210,13 @@ export default function AccountCreateScreen() {
 
                   <Divider hidden />
                   <div>
-                    <a href="/login">Already have a account?</a>
+                    <a
+                      onClick={() => {
+                        history.push("/login");
+                      }}
+                    >
+                      Already have a account?
+                    </a>
                   </div>
                   <Divider section={windowWidth > 650} />
                   <Button

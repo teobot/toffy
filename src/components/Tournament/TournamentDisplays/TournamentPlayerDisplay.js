@@ -51,7 +51,6 @@ export default function TournamentPlayerDisplay({ players, creator }) {
                     <Header
                       inverted
                       as="a"
-                      href=""
                       onClick={() => {
                         history.push(`/u/${player._id}`);
                       }}

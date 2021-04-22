@@ -1,8 +1,10 @@
 import React from "react";
+import { useHistory } from "react-router";
 
 import { Menu, Icon } from "semantic-ui-react";
 
 export default function TournamentMenu({ isAdmin, _id, view }) {
+  let history = useHistory();
   return (
     <Menu
       id="tournamentMenu"
@@ -30,9 +32,11 @@ export default function TournamentMenu({ isAdmin, _id, view }) {
         return (
           <Menu.Item
             as="a"
-            href={`/tournament/${_id}${
-              menuItem.view ? `/${menuItem.view}` : ""
-            }`}
+            onClick={() => {
+              history.push(
+                `/tournament/${_id}${menuItem.view ? `/${menuItem.view}` : ""}`
+              );
+            }}
             active={view === menuItem.view}
             icon={menuItem.icon ? menuItem.icon : null}
             name={menuItem.name}

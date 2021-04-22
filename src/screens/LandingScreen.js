@@ -12,10 +12,14 @@ import { WindowContext } from "../context/WindowContext";
 
 import toffy from "../api/toffy";
 
+import { useHistory } from "react-router";
+
 export default function LandingScreen() {
   let { windowWidth, windowHeight } = useContext(WindowContext);
 
   const [stats, setStats] = useState(null);
+
+  let history = useHistory();
 
   const imageCoverStyle = {
     backgroundSize: "cover",
@@ -239,7 +243,9 @@ export default function LandingScreen() {
               >
                 <Button
                   as="a"
-                  href="/create/account"
+                  onClick={() => {
+                    history.push("/create/account");
+                  }}
                   color="orange"
                   compact
                   size="large"

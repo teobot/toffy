@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import { useHistory } from "react-router";
 
 import {
   Segment,
@@ -29,7 +30,7 @@ function TableRow({ cell1, cell2, cell3, widths }) {
   );
 }
 
-function LeaderboardTableRow({ player, score, index, tournament_id }) {
+function LeaderboardTableRow({ player, score, index, tournament_id, history }) {
   const [playerScore, setPlayerScore] = useState(score);
 
   const { showToast } = useContext(ToastContext);
@@ -54,7 +55,13 @@ function LeaderboardTableRow({ player, score, index, tournament_id }) {
         <Header as="h4" image inverted>
           <Image src={player.profile_pic} rounded size="mini" />
           <Header.Content>
-            <a href={`/u/${player._id}`}>{player.username}</a>
+            <a
+              onClick={() => {
+                history.push(`/u/${player._id}`);
+              }}
+            >
+              {player.username}
+            </a>
             <Header.Subheader>elo: {player.elo}</Header.Subheader>
           </Header.Content>
         </Header>
@@ -90,9 +97,10 @@ export default function LeaderboardSegment({
   isAdmin,
   tournament_id,
   getTournamentData,
-  inProgress,
   settings,
 }) {
+  let history = useHistory();
+
   return (
     <Segment basic>
       <Table inverted striped columns={3} selectable>
@@ -118,6 +126,7 @@ export default function LeaderboardSegment({
               if (isAdmin) {
                 return (
                   <LeaderboardTableRow
+                    history={history}
                     index={index}
                     tournament_id={tournament_id}
                     player={player}
@@ -134,7 +143,13 @@ export default function LeaderboardSegment({
                     <Header as="h4" image inverted>
                       <Image src={player.profile_pic} rounded size="mini" />
                       <Header.Content>
-                        <a href={`/u/${player._id}`}>{player.username}</a>
+                        <a
+                          onClick={() => {
+                            history.push(`/u/${player._id}`);
+                          }}
+                        >
+                          {player.username}
+                        </a>
                         <Header.Subheader>elo: {player.elo}</Header.Subheader>
                       </Header.Content>
                     </Header>

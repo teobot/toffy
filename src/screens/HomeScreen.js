@@ -83,7 +83,9 @@ export default function HomeScreen() {
             right: 50,
           }}
           as="a"
-          href="/create/tournament"
+          onClick={() => {
+            history.push("/create/tournament");
+          }}
           size="big"
         >
           CREATE TOURNAMENT
