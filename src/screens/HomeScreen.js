@@ -24,13 +24,34 @@ import banner from "../img/widescreen-021.jpg";
 
 import TournamentSearchCard from "../components/Tournament/TournamentSearch/TournamentSearchCard";
 
+import { states } from "../components/Tournament/TournamentConfig";
+
 export default function HomeScreen() {
-  const [results, setResults] = useState(null);
+  const [results, setResults] = useState([]);
 
   let history = useHistory();
 
   const { windowWidth, windowHeight } = useContext(WindowContext);
   const { showToast } = useContext(ToastContext);
+
+  const resultSort = [
+    {
+      type: "",
+      title: "All",
+    },
+    {
+      type: states.JOIN,
+      title: "Joining",
+    },
+    {
+      type: states.PLAY,
+      title: "In Progress",
+    },
+    {
+      type: states.END,
+      title: "Ended",
+    },
+  ];
 
   useEffect(() => {
     getTournamentList();
@@ -46,6 +67,16 @@ export default function HomeScreen() {
     }
   };
 
+  const getNumberOfTournamentType = (type) => {
+    let num = 0;
+    for (let i = 0; i < results.length; i++) {
+      if (results[i].type === type) {
+        num++;
+      }
+    }
+    return num;
+  };
+
   const tournamentSearchDisplay = (
     <Grid.Column
       computer={5}
@@ -55,12 +86,18 @@ export default function HomeScreen() {
       tablet={5}
       width={5}
     >
-      <Segment.Group>
-        <Segment inverted>All</Segment>
-        <Segment inverted>Joining</Segment>
-        <Segment inverted>In Progress</Segment>
-        <Segment inverted>Ended</Segment>
-      </Segment.Group>
+      <Grid inverted stretched>
+        {resultSort.map((search) => {
+          return (
+            <Grid.Row columns="equal">
+              <Grid.Column textAlign="left">{search.title}</Grid.Column>
+              <Grid.Column textAlign="right">{`(${getNumberOfTournamentType(
+                search.type
+              )})`}</Grid.Column>
+            </Grid.Row>
+          );
+        })}
+      </Grid>
     </Grid.Column>
   );
 
@@ -105,7 +142,7 @@ export default function HomeScreen() {
             tablet={11}
             width={11}
           >
-            {results ? (
+            {results.length > 0 ? (
               <Segment.Group>
                 {results.map((result, index) => {
                   return (
@@ -114,10 +151,8 @@ export default function HomeScreen() {
                 })}
               </Segment.Group>
             ) : (
-              <Segment basic>
-                <Header inverted>
-                  <Header.Content>No Results</Header.Content>
-                </Header>
+              <Segment inverted textAlign="center">
+                No results were found.
               </Segment>
             )}
           </Grid.Column>

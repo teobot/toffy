@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/toffy/static/css/main.7e620109.chunk.css",
-    "main.js": "/toffy/static/js/main.39e81472.chunk.js",
-    "main.js.map": "/toffy/static/js/main.39e81472.chunk.js.map",
+    "main.js": "/toffy/static/js/main.7f7bc5d1.chunk.js",
+    "main.js.map": "/toffy/static/js/main.7f7bc5d1.chunk.js.map",
     "runtime-main.js": "/toffy/static/js/runtime-main.94169eea.js",
     "runtime-main.js.map": "/toffy/static/js/runtime-main.94169eea.js.map",
     "static/css/2.0a8dc2cd.chunk.css": "/toffy/static/css/2.0a8dc2cd.chunk.css",
@@ -27,6 +27,6 @@
     "static/css/2.0a8dc2cd.chunk.css",
     "static/js/2.a30e2135.chunk.js",
     "static/css/main.7e620109.chunk.css",
-    "static/js/main.39e81472.chunk.js"
+    "static/js/main.7f7bc5d1.chunk.js"
   ]
 }

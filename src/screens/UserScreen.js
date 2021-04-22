@@ -99,7 +99,7 @@ export default function UserScreen() {
                     Edit Profile
                   </Button>
                 ) : (
-                  <Button floated="right">Message</Button>
+                  null // <Button floated="right">Message</Button>
                 )}
               </Grid.Column>
             </Grid.Row>
