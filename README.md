@@ -1,6 +1,6 @@
 <h1 align="center">Welcome to tournament-frontend 👋</h1>
 <p>
-  <img alt="Version" src="https://img.shields.io/badge/version-0.7.0-blue.svg?cacheSeconds=2592000" />
+  <img alt="Version" src="https://img.shields.io/badge/version-0.7.35-blue.svg?cacheSeconds=2592000" />
 </p>
 
 > The front-end of my mmu project
@@ -56,6 +56,32 @@
 [ ] Add new list of user owned tournaments
 
 ## Development Update Documentation
+### 22/04/2021 - 0.7.35
+- Index.js: Change context provider logic, Added toast context
+- toffy.js: Added dev url
+- navbar: Updated UI/UIX
+- AdminTools: Remove unused imports, Added toast
+- UserPlayingButtonGroup: Added Toasts
+- LeaderboardSegment: Added Toasts
+- TournamentBracketSegment: Added Toasts, Imports window dimension context
+- Added new tournament card
+- LoggedInContext: Formatted document
+- Added Toast context
+- Added window dimension context
+- Updated CSS
+- calculateCreated: Added displayShort date function
+- redirectLogin: Change redirect pathname
+- AccountCreateScreen: Removed preset state, Added Toasts, Major UI/UX changes, Added windowContext import
+- CreateTournamentScreen: Added Toasts, Removed comments
+- HomeScreen: Major UI/UX redesign
+- LandingScreen: Major UI/UX redesign, Added windowContext import
+- LoginScreen: Major UI/UX redesign, Added windowContext import
+- TournamentScreen: Added Toasts
+- UserEditScreen: Added Toasts, Added windowContext import
+- UserScreen: Added Toasts, Removed comments, Added windowContext import
+- Updated images
+- Updated deps
+
 ### 20/04/2021 - DEPLOYED - 0.7.0
 - Updated dev auto startup
 - Added new user edit screen
