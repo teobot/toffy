@@ -4,7 +4,7 @@ import StorageHelper from "../helpers/StorageHelper";
 // This is my axios instance,
 // Here I set the location of the tournament server
 
-const DEV = true
+const DEV = false
 const BACKEND_URL = "https://api-toffy.herokuapp.com"
 
 const AxiosInstance = () => {
