@@ -8,15 +8,15 @@ import "./css/index.css";
 
 import NavBar from "./components/NavBar";
 
-import { Divider } from "semantic-ui-react";
-
 import LoginScreen from "./screens/LoginScreen";
 import HomeScreen from "./screens/HomeScreen";
 import LandingScreen from "./screens/LandingScreen";
 import AccountCreateScreen from "./screens/AccountCreateScreen";
 import TournamentScreen from "./screens/TournamentScreen";
 import UserScreen from "./screens/UserScreen";
-import CreateTournamentScreen from "./screens/CreateTournamentScreen";
+import CreateTournamentAdvanced from "./screens/CreateTournamentAdvanced";
+import CreateTournamentSelect from "./screens/CreateTournamentSelect";
+import CreateTournamentSimple from "./screens/CreateTournamentSimple";
 
 import useLoginContext, { LoggedInContext } from "./context/LoggedInContext";
 import useWindowContext, { WindowContext } from "./context/WindowContext";
@@ -32,7 +32,15 @@ const routes = [
   },
   {
     routeName: "/create/tournament",
-    routerComponent: <CreateTournamentScreen />,
+    routerComponent: <CreateTournamentSelect />,
+  },
+  {
+    routeName: "/create/advanced/tournament",
+    routerComponent: <CreateTournamentAdvanced />,
+  },
+  {
+    routeName: "/create/simple/tournament/:question_params?",
+    routerComponent: <CreateTournamentSimple />,
   },
   {
     routeName: "/u/:_id",
@@ -86,11 +94,6 @@ function App() {
               </Switch>
             </div>
           </div>
-          {!["/", "/login", "/create/account"].includes(
-            window.location.pathname
-          ) ? (
-            <Divider section />
-          ) : null}
           {ToastContainer}
         </LoggedInContext.Provider>
       </ToastContext.Provider>
@@ -100,7 +103,7 @@ function App() {
 
 ReactDOM.render(
   <React.StrictMode>
-    <Router basename="/toffy">
+    <Router>
       <App />
     </Router>
   </React.StrictMode>,
