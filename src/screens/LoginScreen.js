@@ -153,13 +153,18 @@ export default function LoginScreen() {
                   </div>
                   <Divider hidden />
                   <div>
-                    <a
+                    <span
+                      style={{
+                        color: "#1E90FF",
+                        cursor: "pointer",
+                        textDecoration: "underline",
+                      }}
                       onClick={() => {
                         history.push("/create/account");
                       }}
                     >
                       Don't have a account?
-                    </a>
+                    </span>
                   </div>
                   <Divider section={windowWidth > 650} />
                   <Button
