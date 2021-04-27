@@ -1,18 +1,11 @@
-import { useContext } from "react";
-import { useDrag } from "react-dnd";
-
-import { TournamentContext } from "../TournamentBracketSegment";
-
 export default function Player({
   ThisX,
   ThisY,
-  matchId,
   playerData,
   width,
   height,
   winner,
 }) {
-  const { isAdmin } = useContext(TournamentContext);
   const { score, player } = playerData;
 
   return (
@@ -59,7 +52,11 @@ export default function Player({
               fill: "black",
               filter: "drop-shadow( 1px 1px 1px rgba(0, 0, 0, .7))",
             }}
-            x={ThisX + width - (17 + `${player ? score: ""}`.toString().length * 4)}
+            x={
+              ThisX +
+              width -
+              (17 + `${player ? score : ""}`.toString().length * 4)
+            }
             y={ThisY + height / 3}
           >
             {player ? score : null}
