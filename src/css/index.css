@@ -58,3 +58,14 @@
   background-color: #343a49;
   color: black;
 }
+
+#custom-model.ui.modal > .content {
+  background-color: #2a2f3c !important;
+}
+
+#custom-model.ui.modal > .header,
+#custom-model.ui.modal > .actions {
+  background-color: #1d222e !important;
+  color: white !important;
+  font-size: 16px !important;
+}
