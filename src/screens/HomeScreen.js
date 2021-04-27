@@ -52,7 +52,9 @@ export default function HomeScreen() {
   const getTournamentList = async () => {
     try {
       const r = await toffy.get("/find");
-      setResults(r.data);
+      setResults(
+        r.data.sort((a, b) => new Date(b.created) - new Date(a.created))
+      );
     } catch (error) {
       // : error getting the tournament list data
       showToast("error", "Failed to retrieve data, please try again later");
@@ -62,7 +64,9 @@ export default function HomeScreen() {
   const getPlayerJoinedTournaments = async () => {
     try {
       const r = await toffy.get("/find/joined");
-      setPlayerResults(r.data);
+      setPlayerResults(
+        r.data.sort((a, b) => new Date(b.created) - new Date(a.created))
+      );
     } catch (error) {
       // : error getting the tournament list data
       showToast("error", "Failed to retrieve data, please try again later");
