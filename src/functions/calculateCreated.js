@@ -15,16 +15,8 @@ export const displayDate = (date) => {
 };
 
 export const shortDisplayDate = (date) => {
-  dayjs.extend(calendar);
-
-  return dayjs().calendar(dayjs(date), {
-    sameDay: "[Today, ] H:mm",
-    nextDay: "MMM DD [,] H:mm",
-    nextWeek: "MMM DD [,] H:mm",
-    lastDay: "MMM DD [,] H:mm",
-    lastWeek: "MMM DD [,] H:mm",
-    sameElse: "MMM DD H:mm",
-  });
+  dayjs.extend(relativeTime);
+  return dayjs(date).format(`MMM DD [,] H:mm`);
 };
 
 export const displayState = (state) => {
