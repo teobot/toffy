@@ -6,6 +6,8 @@ import { Segment, Button, Dropdown, Menu } from "semantic-ui-react";
 
 import { LoggedInContext } from "../context/LoggedInContext";
 
+import logo from "../img/logo.png"
+
 export default function NavBar() {
   let history = useHistory();
   const { UserLoggedIn, handleLogout, username, user_id } = useContext(
@@ -22,7 +24,7 @@ export default function NavBar() {
           >
             <img
               alt="company logo"
-              src="https://react.semantic-ui.com/logo.png"
+              src={logo}
             />
           </Menu.Item>
 
