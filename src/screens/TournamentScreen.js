@@ -11,6 +11,8 @@ import {
   Icon,
   Image,
   Segment,
+  Dimmer,
+  Loader,
 } from "semantic-ui-react";
 
 import toffy from "../api/toffy";
@@ -20,6 +22,8 @@ import AdminTools from "../components/Tournament/AdministrationTools/AdminTools"
 
 import TournamentBracketSegment from "../components/Tournament/TournamentDisplays/SingleElimination/TournamentBracketSegment";
 import LeaderboardSegment from "../components/Tournament/TournamentDisplays/LeaderBoard/LeaderboardSegment";
+import SwissDisplaySegment from "../components/Tournament/TournamentDisplays/Swiss/SwissDisplaySegment";
+import FreeForAllDisplay from "../components/Tournament/TournamentDisplays/FreeForAll/FreeForAllDisplay";
 
 import {
   tournament_types,
@@ -41,12 +45,13 @@ export default function TournamentScreen() {
   const { showToast } = useContext(ToastContext);
 
   const [result, setResult] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     getTournamentData();
   }, []);
 
-  const MatchDataDisplayComponent = (type, match_data, isAdmin) => {
+  const MatchDataDisplayComponent = () => {
     // This determines which tournament display to use: TD5
     if (result.match_data === undefined || result.match_data.length === 0) {
       return (
@@ -63,32 +68,55 @@ export default function TournamentScreen() {
           </Segment>
         </>
       );
-    }
-    if (type === tournament_types.SINGLE_ELIMINATION) {
+    } else if (result.type === tournament_types.SINGLE_ELIMINATION) {
       return (
         <TournamentBracketSegment
           getTournamentData={getTournamentData}
           tournament_id={result._id}
-          match_data={match_data}
-          isAdmin={isAdmin}
+          match_data={result.match_data}
+          isAdmin={result.isAdmin}
           inProgress={result.state === states.PLAY}
         />
       );
-    } else if (type === tournament_types.LEADERBOARD) {
+    } else if (result.type === tournament_types.LEADERBOARD) {
       // If tournament type is a leaderboard
       return (
         <LeaderboardSegment
           getTournamentData={getTournamentData}
           tournament_id={result._id}
-          match_data={match_data}
-          isAdmin={isAdmin}
+          match_data={result.match_data}
+          isAdmin={result.isAdmin}
           settings={result.settings}
           inProgress={result.state === states.PLAY}
         />
       );
+    } else if (result.type === tournament_types.SWISS) {
+      // Display the swiss segment
+      return (
+        <SwissDisplaySegment
+          getTournamentData={getTournamentData}
+          tournament_id={result._id}
+          match_data={result.match_data}
+          isAdmin={result.isAdmin}
+          settings={result.settings}
+          players={result.players}
+          inProgress={result.state === states.PLAY}
+        />
+      );
+    } else if (result.type === tournament_types.FREEFORALL) {
+      // Display the free for all segment
+      return (
+        <FreeForAllDisplay
+          getTournamentData={getTournamentData}
+          match_data={result.match_data}
+          isAdmin={result.isAdmin}
+          inProgress={result.state === states.PLAY}
+          players={result.players}
+        />
+      );
+    } else {
+      return null;
     }
-
-    return null;
   };
 
   const checkTournamentView = (v) => {
@@ -100,6 +128,7 @@ export default function TournamentScreen() {
     try {
       const t = await toffy.get(`/tournament/${_id}`);
       setResult(t.data);
+      setLoading(false);
     } catch (error) {
       // : Failed getting the tournament information
       showToast("error", "Tournament doesn't exist.");
@@ -114,9 +143,15 @@ export default function TournamentScreen() {
     history.push(`/tournament/${_id}`);
   }
 
-  if (!result) {
-    // result is null
-    return <div>Loading</div>;
+  if (loading) {
+    // If user information is loading
+    return (
+      <Container>
+        <Dimmer active>
+          <Loader inverted>Loading</Loader>
+        </Dimmer>
+      </Container>
+    );
   } else {
     return (
       <>
@@ -201,10 +236,17 @@ export default function TournamentScreen() {
                       <Image circular src={result.creator.profile_pic} />
                       <Header.Content>
                         <Header.Subheader>
-                          <div style={{ color: "white", fontSize: 14 }}>
+                          <div
+                            style={{
+                              color: "white",
+                              fontSize: 12,
+                              padding: 0,
+                              margin: 0,
+                            }}
+                          >
                             Organized by
                           </div>
-                          <a
+                          <span
                             onClick={() => {
                               history.push(`/u/${result.creator._id}`);
                             }}
@@ -212,10 +254,11 @@ export default function TournamentScreen() {
                               color: "orange",
                               fontWeight: "900",
                               textDecoration: "underline",
+                              cursor: "pointer",
                             }}
                           >
                             {result.creator.username}
-                          </a>
+                          </span>
                         </Header.Subheader>
                       </Header.Content>
                     </Header>
@@ -241,22 +284,21 @@ export default function TournamentScreen() {
           ) : null}
 
           {/* Display the match data to the user */}
-          {checkTournamentView(undefined)
-            ? MatchDataDisplayComponent(
-                result.type,
-                result.match_data,
-                result.isAdmin
-              )
-            : null}
+          {checkTournamentView(undefined) ? MatchDataDisplayComponent() : null}
 
           {/* This displays the players in a grid */}
           {checkTournamentView("players") ? (
             <TournamentPlayerDisplay
               players={result.players}
               creator={result.creator}
+              isAdmin={result.isAdmin}
+              getTournamentData={getTournamentData}
+              tournament_id={result._id}
+              state={result.state}
             />
           ) : null}
         </Container>
+        <Divider section />
       </>
     );
   }
