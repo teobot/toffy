@@ -1,23 +1,36 @@
-<h1 align="center">Welcome to tournament-frontend 👋</h1>
-<p>
-  <img alt="Version" src="https://img.shields.io/badge/version-0.7.35-blue.svg?cacheSeconds=2592000" />
-</p>
+# Toffy React Project Frontend
+![Image of homepage](https://raw.githubusercontent.com/teobot/toffy-bucket/main/SharedScreenshot.jpg)
+*Student ID*: **18055445**  
+*Created By*: **Theo Clapperton**  
+*Description*: **The frontend for my final year project**  
+*Written In*: **React**  
+*Last Updated*: **28/04/2021**  
+*Style Guide*: **Prettier**  
+*Linter*: **ESlint**  
+*Version*: **`1.0.0`**  
+*Github Repo Link*: ***[Github Link](https://github.com/teobot/toffy)***  
+*Live Open Version*: ***[Homepage Link](https://toffy.netlify.app/)***  
 
-> The front-end of my mmu project
 
-### 🏠 [Homepage](https://teobot.github.io/toffy/)
+## Development
 
-## Install
+### Install Dependencies
 ```javascript
   npm install
 ```
 
-## Development
+### Start Local Development
 ```javascript
   yarn start
 ```
 
-## Adding New Routes
+## Deployment
+1. Change `./src/api/toffy.js` DEV to false
+2. Push to `main` branch and netlify will deploy automatically
+
+
+## Development Guides
+### Adding New Routes
 1. Create the new screen and place file inside `./src/screens/`
 2. Inside `./src/index.js`, import and add a new object to the array, such as below
 ```javascript
@@ -26,37 +39,72 @@
   routerComponent: <ComponentName />,
 },
 ```
+### Adding new Tournament types
+1. Add the new tournament type ENUM in the backend tournament.config
+2. Add the new tournament type ENUM to the tournament.model
+3. Create the tournament creation process in the tournament.creation.route
+4. Add the new tournament ENUM in the frontend tournament.config
+5. Add any new params to the frontend tournament creation
+6. Add the new params to the reducer
+7. Add the new params to the form input on the specific tournament type
+8. Create the player allocation function in the `Backend`
+9. Create the tournament display and place it inside `./src/components/Tournament/TournamentDisplays/`
+10. Goto `./src/screens/TournamentScreen.js` and import the new display
+11. Add the display to the `MatchDisplayComponent` function by adding a `if` statement based on the tournament type
+    - Search for `TD5` for the correct placement function 
 
-## Adding new Tournament types
-1. Follow the instructions on the backend first to setup a type for the server
-2. Create the tournament display and place it inside `./src/components/Tournament/TournamentDisplays/`
-3. Goto `./src/screens/TournamentScreen.js` and import the new display
-4. Add the display to the `MatchDisplayComponent` function by adding a `if` statement based on the tournament type
-   1. Search for `TD5` for the correct placement function 
-
-## Resources
-- https://www.npmjs.com/package/react-d3-tree
-  - For creating the node tree
-
-## Author
-
-👤 **Theo Clapperton**
-
-* Website: https://teobot.github.io/
-* Github: [@teobot](https://github.com/teobot)
-* LinkedIn: [@theoClapperton](https://linkedin.com/in/theoClapperton)
-
-## Todo
-[x] Tournament Create Screen
-[x] Add new Leaderboard Tournament Type
-[ ] Add ability to message users
-[x] Add Tournament Edit tools
-[x] Add user Edit tools
-[ ] Update the look of the matches on the UserScreen
-[ ] Add new list of user owned tournaments
 
 ## Development Update Documentation
-### 22/04/2021 - 0.7.35
+### 27/04/2021 - 1.0.0
+- UserScreen: Removed message button
+- index: Remove unused import
+- NavBar: Removed unused imports
+- LeaderboardSegment: Added Toast, Change function imports, Added Logic
+- TournamentBracketSegment: Updated match updating and model refreshing
+- LoggedInContext: Removed unused imports
+- redirectLogin: Removed unused imports
+- HomeScreen: Removed unused imports
+- TournamentScreen: Removed unused imports
+- Navbar: Added home button
+- index.css: Added onHover CSS
+- CreateTournamentScreen: Fixed typo
+- Added tournament sort by date created
+- Fixed display date bug
+- Add hoverable profile picture and clickable matches
+- Remove firstnname and lastname inputs
+- Added new tournament display components
+- Changed account link button styling
+- Import logo
+- Added no results segment display
+- Created new tournament creator
+- Created new tournament creation selector
+- Deleted old tournament creator
+- Added advanced tournament creation
+- Remove firstname and lastname inputs
+- Added logo
+- Added sorting function
+- Added CSS
+- Remove unused imports
+- Added swiss round component
+- Added swiss match component
+- Added swiss tournament display
+- Remove imports, and context imports
+- Remove console log, Minor text changes
+- Fixed imports, Minor table display changes, Added search bar
+- Added free for all round component
+- Added free for all player component
+- Added free for all match component
+- Added free for all tournament display
+- Major UI/UX changes
+- Fixed imports and toasts
+- Fixed toast message
+- Added tournament questions and dropdown menu
+- Imported custom logo
+- Imported new screens
+- Updated Deps
+- Removed deploy.bat
+
+### 22/04/2021 - 0.7.4
 - Index.js: Change context provider logic, Added toast context
 - toffy.js: Added dev url
 - navbar: Updated UI/UIX
@@ -145,6 +193,61 @@
 - Updated Version number
 - Updated deps
 
-## Show your support
+## Issues / Todo
+- [x] Tournament Create Screen
+- [x] Add new Leaderboard Tournament Type
+- [x] Add Tournament Edit tools
+- [x] Add user Edit tools
+- [x] Update the look of the matches on the UserScreen
+- [x] Add new list of user owned tournaments
+- [x] Need to have some sort of search for non-owned tournaments
+- [x] Need to have a message for when a user doesn't have any tournaments
+- [x] When you visit a link like /home is shows Github 404 page not found 
+- [x] Error on match saving
+- [x] no toast on save tournament leaderboard
+- [x] When you save a leaderboard score it doesn't show until reload page
+- [x] show the tournament title on the profile screen where the player can go to the tournament
+  - Feedback by tester
+- [x] Be able to kick players from your games
+  - [x] Fix bug so can only kick while joining
+  - [x] Fixed bug where creator could kick themself 
+- [x] Smart tournament type controller
+  - I created a new screen to pick between simple and advanced
+  - I created a the simple questions screen that lead to a display component
+  - I created some data showing disadvantages of each type
+  - [x] Create the function that decides which tournament type to use
+  - [x] Create a view that shows the tournament type to the user
+  - [x] Create another screens that gather any additional information the tournament needs
+  - [x] When the player clicks submit take them to the newly created tournament
+- [x] Create tournament screen says update profile
+- [x] When saving player score on leaderboard need to update the score
+- [x] Include tournament where everyone plays each other X amount of times then the winner is the team that won the most
+- [x] Remove the firstname, lastname as its not needed
+- [x] Have a toast on tournament join or leave
+- [x] Cannot move player position in leaderboard
+- [x] Leaderboard textAlign is having problems
+- [x] Issue where if the user hasn't created any tournaments, player joined tournaments won't load
+- [x] Need to adding loading screens
+  - [x] TournamentScreen
+  - [x] UserScreen
+- [x] When you click the profile picture on the profile screen take you to the settings
+  - Feedback by tester
+- [x] Login screen `dont have account` text needs formatting
+- [x] Tournament screen the wrong person is being highlighted to the user in the players section
+  - Looks like its always the creator
+- [x] Create the backend for the new tournament type freeforall
+- [x] Create the playerAllocation
+- [x] Create the updating function on the backend
+- [x] Create the display on the frontend
+- [x] Create the admin tools on the frontend to update it
+- [x] There is a modal that needs styling on the single elimination page
+- [x] Removed listed from tournament creation
+- [x] Add some validation
 
-Give a ⭐️ if this project helped you!
+## Author
+
+👤 **Theo Clapperton**
+
+* Website: https://teobot.github.io/
+* Github: [@teobot](https://github.com/teobot)
+* LinkedIn: [@theoClapperton](https://linkedin.com/in/theoClapperton)
