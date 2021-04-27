@@ -8,13 +8,15 @@ import {
   Image,
   Input,
   Button,
-  Grid,
   Icon,
+  Label,
 } from "semantic-ui-react";
 
 import toffy from "../../../../api/toffy";
 
 import { ToastContext } from "../../../../context/ToastContext";
+
+import { sortComparison } from "../../../../functions/sortFunction";
 
 function TableRow({ cell1, cell2, cell3, widths }) {
   return (
@@ -22,7 +24,9 @@ function TableRow({ cell1, cell2, cell3, widths }) {
       <Table.Cell textAlign="center" width={widths[0]}>
         {cell1}
       </Table.Cell>
-      <Table.Cell width={widths[1]}>{cell2}</Table.Cell>
+      <Table.Cell selectable width={widths[1]}>
+        {cell2}
+      </Table.Cell>
       <Table.Cell textAlign="center" width={widths[2]}>
         {cell3}
       </Table.Cell>
@@ -37,6 +41,7 @@ function LeaderboardTableRow({
   player,
   score,
   getTournamentData,
+  setTableKey,
 }) {
   const [playerScore, setPlayerScore] = useState(score);
 
@@ -48,7 +53,8 @@ function LeaderboardTableRow({
         score: playerScore,
       });
       showToast("success", "Updated player score");
-      getTournamentData()
+      await getTournamentData();
+      setTableKey(new Date());
     } catch (error) {
       // : failed saving a user score
       showToast("error", "Failed to save score, try again later.");
@@ -58,44 +64,53 @@ function LeaderboardTableRow({
 
   return (
     <TableRow
-      widths={[1, 9, 6]}
-      cell1={index + 1}
+      widths={[2, 6, 8]}
+      cell1={
+        index === 0 ? (
+          <Label color="yellow" ribbon>
+            First
+          </Label>
+        ) : index === 1 ? (
+          <Label color="grey" ribbon>
+            Second
+          </Label>
+        ) : index === 2 ? (
+          <Label color="orange" ribbon>
+            Third
+          </Label>
+        ) : (
+          `${index + 1}`
+        )
+      }
       cell2={
         <Header as="h4" image inverted>
           <Image src={player.profile_pic} rounded size="mini" />
-          <Header.Content>
-            <a
-              onClick={() => {
-                history.push(`/u/${player._id}`);
-              }}
-            >
-              {player.username}
-            </a>
+          <Header.Content
+            style={{ cursor: "pointer" }}
+            onClick={() => {
+              history.push(`/u/${player._id}`);
+            }}
+          >
+            {player.username}
             <Header.Subheader>elo: {player.elo}</Header.Subheader>
           </Header.Content>
         </Header>
       }
       cell3={
-        <Grid stretched>
-          <Grid.Row stretched>
-            <Grid.Column width={10}>
-              <Input
-                value={playerScore}
-                onChange={(event, data) => {
-                  setPlayerScore(data.value);
-                }}
-                className="settingInput"
-                fluid
-              />
-            </Grid.Column>
-            <Grid.Column width={6} textAlign="center">
-              <Button onClick={handleSave} positive compact size="small">
-                <Icon name="save" />
-                Save
-              </Button>
-            </Grid.Column>
-          </Grid.Row>
-        </Grid>
+        <Input
+          icon={
+            <Button icon positive onClick={handleSave}>
+              <Icon name="save" />
+            </Button>
+          }
+          fluid
+          className="settingInput"
+          placeholder="Score..."
+          value={playerScore}
+          onChange={(event, data) => {
+            setPlayerScore(data.value);
+          }}
+        />
       }
     />
   );
@@ -110,9 +125,35 @@ export default function LeaderboardSegment({
 }) {
   let history = useHistory();
 
+  const [searchUsername, setSearchUsername] = useState("");
+
+  const [tableKey, setTableKey] = useState(new Date());
+
   return (
     <Segment basic>
-      <Table inverted striped columns={3} selectable>
+      {/* Search bar */}
+      <Input
+        onChange={(event, data) => {
+          setSearchUsername(data.value);
+        }}
+        icon={
+          <Icon
+            name="remove"
+            inverted
+            circular
+            link
+            onClick={() => {
+              setSearchUsername("");
+            }}
+          />
+        }
+        value={searchUsername}
+        className="settingInput"
+        fluid
+        placeholder="Search..."
+      />
+
+      <Table inverted striped unstackable selectable compact key={tableKey}>
         <Table.Header>
           <Table.Row textAlign="center">
             <Table.HeaderCell>Position</Table.HeaderCell>
@@ -123,18 +164,18 @@ export default function LeaderboardSegment({
         <Table.Body>
           {[...match_data]
             .sort(function compare(a, b) {
-              if (a.score < b.score) {
-                return -1;
-              }
-              if (a.score > b.score) {
-                return 1;
-              }
-              return 0;
+              return sortComparison(a, b);
             })
             .map(({ player, score }, index) => {
+              if (searchUsername) {
+                if (!player.username.includes(searchUsername)) {
+                  return null;
+                }
+              }
               if (isAdmin) {
                 return (
                   <LeaderboardTableRow
+                    setTableKey={setTableKey}
                     history={history}
                     index={index}
                     tournament_id={tournament_id}
@@ -151,14 +192,13 @@ export default function LeaderboardSegment({
                   cell2={
                     <Header as="h4" image inverted>
                       <Image src={player.profile_pic} rounded size="mini" />
-                      <Header.Content>
-                        <a
-                          onClick={() => {
-                            history.push(`/u/${player._id}`);
-                          }}
-                        >
-                          {player.username}
-                        </a>
+                      <Header.Content
+                        style={{ cursor: "pointer" }}
+                        onClick={() => {
+                          history.push(`/u/${player._id}`);
+                        }}
+                      >
+                        {player.username}
                         <Header.Subheader>elo: {player.elo}</Header.Subheader>
                       </Header.Content>
                     </Header>
