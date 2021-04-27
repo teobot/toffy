@@ -1,1 +1,0 @@
-yarn run deploy && git add -A && git commit -m "Updated Build"
