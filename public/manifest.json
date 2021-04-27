@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Toffy",
+  "name": "The Simple Tournament Organizer",
   "icons": [
     {
       "src": "favicon.ico",
