@@ -33,7 +33,7 @@ export default function AdminTools({ tournament, getTournamentData }) {
       await getTournamentData();
     } catch (error) {
       // : handle the progression on fail
-      showToast("error", "Tournament progression failed.");
+      showToast("error", error.response.data.error);
     }
   };
 
