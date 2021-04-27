@@ -26,10 +26,6 @@ const reducer = (state, action) => {
   switch (action.type) {
     case "change_username":
       return { ...state, username: action.payload };
-    case "change_firstname":
-      return { ...state, firstname: action.payload };
-    case "change_lastname":
-      return { ...state, lastname: action.payload };
     case "change_email":
       return { ...state, email: action.payload };
     case "change_profile_pic":
@@ -53,8 +49,6 @@ export default function UserEditScreen() {
 
   const [state, dispatch] = useReducer(reducer, {
     username: "",
-    firstname: "",
-    lastname: "",
     email: "",
     profile_pic: "",
   });
@@ -176,36 +170,6 @@ export default function UserEditScreen() {
               }}
               style={inputStyle}
               value={state.email}
-              className="settingInput"
-            />
-            <div className="settingLabel">(not visible to other users)</div>
-          </div>
-
-          <div style={settingContainerStyle}>
-            <Header as="h4" style={{ color: "lightgrey" }}>
-              <Header.Content>Firstname</Header.Content>
-            </Header>
-            <Input
-              onChange={(event, data) => {
-                dispatch({ type: "change_firstname", payload: data.value });
-              }}
-              style={inputStyle}
-              value={state.firstname}
-              className="settingInput"
-            />
-            <div className="settingLabel">(not visible to other users)</div>
-          </div>
-
-          <div style={settingContainerStyle}>
-            <Header as="h4" style={{ color: "lightgrey" }}>
-              <Header.Content>Lastname</Header.Content>
-            </Header>
-            <Input
-              onChange={(event, data) => {
-                dispatch({ type: "change_lastname", payload: data.value });
-              }}
-              style={inputStyle}
-              value={state.lastname}
               className="settingInput"
             />
             <div className="settingLabel">(not visible to other users)</div>
