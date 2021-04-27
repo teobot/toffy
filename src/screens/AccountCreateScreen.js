@@ -23,10 +23,6 @@ const reducer = (state, action) => {
   switch (action.type) {
     case "change_username":
       return { ...state, username: action.payload };
-    case "change_firstname":
-      return { ...state, firstname: action.payload };
-    case "change_lastname":
-      return { ...state, lastname: action.payload };
     case "change_email":
       return { ...state, email: action.payload };
     case "change_password":
@@ -39,8 +35,6 @@ const reducer = (state, action) => {
 export default function AccountCreateScreen() {
   const [state, dispatch] = useReducer(reducer, {
     username: "",
-    firstname: "",
-    lastname: "",
     email: "",
     password: "",
   });
@@ -74,7 +68,15 @@ export default function AccountCreateScreen() {
       // Push the user to the home screen
       history.push("/home");
     } catch (error) {
-      showToast("error", error.response.data.error);
+      if (error.response.data.error.errors) {
+        for (const [key, value] of Object.entries(
+          error.response.data.error.errors
+        )) {
+          showToast("error", value.message);
+        }
+      } else {
+        showToast("error", error.response.data.error);
+      }
     }
   };
 
@@ -155,31 +157,6 @@ export default function AccountCreateScreen() {
                       fluid
                     />
                   </div>
-                  <Divider hidden />
-                  <div>
-                    <Input
-                      placeholder="Firstname"
-                      onChange={(event) => {
-                        handleInputChange(event, "change_firstname");
-                      }}
-                      value={state.firstname}
-                      className="settingInput"
-                      fluid
-                    />
-                  </div>
-
-                  <Divider hidden />
-                  <div>
-                    <Input
-                      placeholder="Lastname"
-                      onChange={(event) => {
-                        handleInputChange(event, "change_lastname");
-                      }}
-                      value={state.lastname}
-                      className="settingInput"
-                      fluid
-                    />
-                  </div>
 
                   <Divider hidden />
                   <div>
@@ -210,13 +187,18 @@ export default function AccountCreateScreen() {
 
                   <Divider hidden />
                   <div>
-                    <a
+                    <span
+                      style={{
+                        color: "#1E90FF",
+                        cursor: "pointer",
+                        textDecoration: "underline",
+                      }}
                       onClick={() => {
                         history.push("/login");
                       }}
                     >
                       Already have a account?
-                    </a>
+                    </span>
                   </div>
                   <Divider section={windowWidth > 650} />
                   <Button
