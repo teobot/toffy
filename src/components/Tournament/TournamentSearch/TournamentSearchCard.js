@@ -6,8 +6,6 @@ import {
   Image,
   Icon,
   Label,
-  Loader,
-  Placeholder,
 } from "semantic-ui-react";
 
 import { shortDisplayDate } from "../../../functions/calculateCreated";
@@ -15,7 +13,7 @@ import { shortDisplayDate } from "../../../functions/calculateCreated";
 import { WindowContext } from "../../../context/WindowContext";
 
 export default function TournamentSearchCard({ history, result }) {
-  const { windowWidth, windowHeight } = useContext(WindowContext);
+  const { windowWidth } = useContext(WindowContext);
 
   const [onHover, setOnHover] = useState(false);
 
