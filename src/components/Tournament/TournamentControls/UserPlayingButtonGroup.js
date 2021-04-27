@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 
-import { Button, Container, Segment } from "semantic-ui-react";
+import { Button } from "semantic-ui-react";
 
 import toffy from "../../../api/toffy";
 
@@ -21,6 +21,7 @@ export default function UserPlayingButtonGroup({
     //   Handle the user wanting to join the tournament
     try {
       const r = await toffy.post(`/tournament/${_id}/join`);
+      showToast("success", "You have joined the tournament.");
       await getTournamentData();
     } catch (error) {
       // : player failed to join
@@ -32,6 +33,7 @@ export default function UserPlayingButtonGroup({
     //   Handle the player wanting to leave the tournament
     try {
       const r = await toffy.delete(`/tournament/${_id}/leave`);
+      showToast("info", "You left the tournament.");
       await getTournamentData();
     } catch (error) {
       // : player failed to leave the tournament
