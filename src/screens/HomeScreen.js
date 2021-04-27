@@ -181,36 +181,36 @@ export default function HomeScreen() {
             tablet={11}
             width={11}
           >
-            {results.length > 0 ? (
-              <Segment.Group>
-                {playerJoinedSort
-                  ? playerResults.map((result, index) => {
-                      return (
-                        <TournamentSearchCard
-                          result={result}
-                          history={history}
-                        />
-                      );
-                    })
-                  : results.map((result, index) => {
-                      if (sortingBy.state !== "/") {
-                        if (sortingBy.state !== result.state) {
-                          return null;
-                        }
-                      }
-                      return (
-                        <TournamentSearchCard
-                          result={result}
-                          history={history}
-                        />
-                      );
-                    })}
-              </Segment.Group>
-            ) : (
-              <Segment inverted textAlign="center">
-                No results were found.
-              </Segment>
-            )}
+            <Segment.Group>
+              {playerJoinedSort ? (
+                playerResults.length > 0 ? (
+                  playerResults.map((result, index) => {
+                    return (
+                      <TournamentSearchCard result={result} history={history} />
+                    );
+                  })
+                ) : (
+                  <Segment inverted textAlign="center">
+                    No results were found.
+                  </Segment>
+                )
+              ) : results.length > 0 ? (
+                results.map((result, index) => {
+                  if (sortingBy.state !== "/") {
+                    if (sortingBy.state !== result.state) {
+                      return null;
+                    }
+                  }
+                  return (
+                    <TournamentSearchCard result={result} history={history} />
+                  );
+                })
+              ) : (
+                <Segment inverted textAlign="center">
+                  No results were found.
+                </Segment>
+              )}
+            </Segment.Group>
           </Grid.Column>
           {windowWidth > 768 ? tournamentSearchDisplay : null}
         </Grid.Row>
