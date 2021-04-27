@@ -14,6 +14,8 @@ import toffy from "../api/toffy";
 
 import { useHistory } from "react-router";
 
+import logo from "../img/logo.png"
+
 export default function LandingScreen() {
   let { windowWidth, windowHeight } = useContext(WindowContext);
 
@@ -66,7 +68,7 @@ export default function LandingScreen() {
             }}
             inverted
           >
-            <Image circular src="https://react.semantic-ui.com/logo.png" />
+            <Image circular src={logo} />
             <Header.Content>
               Toffy
               <Header.Subheader
