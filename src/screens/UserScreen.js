@@ -5,11 +5,13 @@ import { useHistory, useParams } from "react-router";
 import {
   Button,
   Container,
+  Dimmer,
   Divider,
   Grid,
   Header,
   Image,
   Label,
+  Loader,
   Segment,
 } from "semantic-ui-react";
 
@@ -27,6 +29,8 @@ export default function UserScreen() {
   let { _id } = useParams();
 
   const [user, setUser] = useState(null);
+  const [profileHover, setProfileHover] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   let history = useHistory();
 
@@ -43,6 +47,7 @@ export default function UserScreen() {
     try {
       const user = await toffy.get(`/user/${_id}`);
       setUser(user.data);
+      setLoading(false);
     } catch (error) {
       // : error getting the user information
       showToast("error", error.response.data.error);
@@ -51,11 +56,13 @@ export default function UserScreen() {
     }
   };
 
-  if (!user) {
-    // User information is loading
+  if (loading) {
+    // If user information is loading
     return (
       <Container>
-        <Header>Loading...</Header>
+        <Dimmer active>
+          <Loader inverted>Loading</Loader>
+        </Dimmer>
       </Container>
     );
   } else {
@@ -76,7 +83,32 @@ export default function UserScreen() {
             <Grid.Row>
               <Grid.Column width={8}>
                 <Header inverted size="huge">
-                  <Image circular src={user.profile_pic} />
+                  <Image
+                    disabled={profileHover}
+                    onMouseEnter={() => {
+                      if (user._id === user_id) {
+                        // User is the profile
+                        setProfileHover(true);
+                      }
+                    }}
+                    onMouseLeave={() => {
+                      if (user._id === user_id) {
+                        // User is the profile
+                        setProfileHover(false);
+                      }
+                    }}
+                    onClick={() => {
+                      if (user._id === user_id) {
+                        history.push(`/u/${_id}/edit`);
+                      }
+                    }}
+                    style={{
+                      ...(user._id === user_id ? { cursor: "pointer" } : {}),
+                    }}
+                    circular
+                    src={user.profile_pic}
+                  />
+
                   <Header.Content>
                     {user.username}
                     <Header.Subheader>
@@ -87,18 +119,19 @@ export default function UserScreen() {
                 </Header>
               </Grid.Column>
               <Grid.Column width={8}>
-                {user._id === user_id ? (
-                  <Button
-                    as="a"
-                    onClick={() => {
-                      history.push(`/u/${_id}/edit`);
-                    }}
-                    primary
-                    floated="right"
-                  >
-                    Edit Profile
-                  </Button>
-                ) : null // <Button floated="right">Message</Button>
+                {
+                  user._id === user_id ? (
+                    <Button
+                      as="a"
+                      onClick={() => {
+                        history.push(`/u/${_id}/edit`);
+                      }}
+                      primary
+                      floated="right"
+                    >
+                      Edit Profile
+                    </Button>
+                  ) : null // <Button floated="right">Message</Button>
                 }
               </Grid.Column>
             </Grid.Row>
@@ -244,6 +277,10 @@ export default function UserScreen() {
                             : "yellow"
                         }`,
                         margin: "5px 0px",
+                        cursor: "pointer",
+                      }}
+                      onClick={() => {
+                        history.push(`/tournament/${match.tournament_id}`);
                       }}
                     >
                       <Header style={{ margin: 0, padding: 0 }}>
