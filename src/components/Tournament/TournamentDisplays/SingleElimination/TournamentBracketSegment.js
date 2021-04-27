@@ -76,7 +76,6 @@ export default function RobinRoundDisplay({
 
   const UpdateMatchDetails = async () => {
     setLoading(true);
-    console.log(modelMatch);
     try {
       const r = await toffy.patch(`/match/${modelMatch._id}`, {
         winner: state.player1Selected
@@ -147,12 +146,13 @@ export default function RobinRoundDisplay({
         }}
         onOpen={() => setOpen(true)}
         open={open}
+        id="custom-model"
       >
         <Modal.Header>Edit Match Details</Modal.Header>
 
         {modelMatch ? (
           <Modal.Content>
-            <Header textAlign="center" size="huge">
+            <Header inverted textAlign="center" size="huge">
               Who won?
             </Header>
 
