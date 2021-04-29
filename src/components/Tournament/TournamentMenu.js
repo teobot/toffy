@@ -1,9 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useHistory } from "react-router";
 
 import { Menu, Icon } from "semantic-ui-react";
 
-export default function TournamentMenu({ isAdmin, _id, view }) {
+import { WindowContext } from "../../context/WindowContext";
+
+export default function TournamentMenu({ messages, isAdmin, _id, view }) {
+  const { windowWidth, windowHeight } = useContext(WindowContext);
+
   let history = useHistory();
   return (
     <Menu
@@ -11,20 +15,31 @@ export default function TournamentMenu({ isAdmin, _id, view }) {
       pointing
       secondary
       inverted
+      fluid
+      vertical={windowWidth < 650}
       style={{ fontSize: 16, marginTop: 15 }}
     >
       {[
         { name: "Bracket", view: undefined, icon: null },
         { name: "Players", view: "players", icon: null },
-        isAdmin
-          ? {
-              name: "Settings",
-              view: "settings",
-              icon: (
-                <Icon size="small" style={{ color: "white" }} name="unlock" />
-              ),
-            }
-          : null,
+        ...(isAdmin
+          ? [
+              {
+                name: `Messages (${messages.length})`,
+                view: "messages",
+                icon: (
+                  <Icon size="small" style={{ color: "white" }} name="unlock" />
+                ),
+              },
+              {
+                name: "Settings",
+                view: "settings",
+                icon: (
+                  <Icon size="small" style={{ color: "white" }} name="unlock" />
+                ),
+              },
+            ]
+          : []),
       ].map((menuItem) => {
         if (!menuItem) {
           return null;
@@ -38,9 +53,10 @@ export default function TournamentMenu({ isAdmin, _id, view }) {
               );
             }}
             active={view === menuItem.view}
-            icon={menuItem.icon ? menuItem.icon : null}
-            name={menuItem.name}
-          />
+          >
+            {menuItem.icon ? menuItem.icon : null}
+            {menuItem.name}
+          </Menu.Item>
         );
       })}
     </Menu>
