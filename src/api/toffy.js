@@ -4,12 +4,12 @@ import StorageHelper from "../helpers/StorageHelper";
 // This is my axios instance,
 // Here I set the location of the tournament server
 
-const DEV = false
+const dev = false
 const BACKEND_URL = "https://api-toffy.herokuapp.com"
 
 const AxiosInstance = () => {
   const instance = axios.create({
-    baseURL: DEV ? "http://192.168.1.216:3333" : BACKEND_URL,
+    baseURL: dev ? "http://192.168.1.216:3333" : BACKEND_URL,
     timeout: 5000,
   });
 
