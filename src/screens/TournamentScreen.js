@@ -35,6 +35,7 @@ import TournamentMenu from "../components/Tournament/TournamentMenu";
 
 import { WindowContext } from "../context/WindowContext";
 import { ToastContext } from "../context/ToastContext";
+import TournamentMessages from "../components/Tournament/AdministrationTools/TournamentMessages";
 
 export default function TournamentScreen() {
   let { _id, view } = useParams();
@@ -138,7 +139,7 @@ export default function TournamentScreen() {
     }
   };
 
-  if (result && view === "settings" && !result.isAdmin) {
+  if (result && ["settings", "messages"].includes(view) && !result.isAdmin) {
     // User has tried to enter the settings screen but is not the admin
     history.push(`/tournament/${_id}`);
   }
@@ -268,7 +269,12 @@ export default function TournamentScreen() {
             </Grid>
           </Container>
           <Container>
-            <TournamentMenu isAdmin={result.isAdmin} _id={_id} view={view} />
+            <TournamentMenu
+              messages={result.messages}
+              isAdmin={result.isAdmin}
+              _id={_id}
+              view={view}
+            />
           </Container>
         </div>
 
@@ -278,6 +284,16 @@ export default function TournamentScreen() {
             result.isAdmin ? (
               <AdminTools
                 tournament={result}
+                getTournamentData={getTournamentData}
+              />
+            ) : null
+          ) : null}
+
+          {/* Tournament messages for the creator */}
+          {checkTournamentView("messages") ? (
+            result.isAdmin ? (
+              <TournamentMessages
+                messages={result.messages}
                 getTournamentData={getTournamentData}
               />
             ) : null
