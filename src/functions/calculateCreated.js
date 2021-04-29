@@ -1,21 +1,20 @@
 import { states } from "../components/Tournament/TournamentConfig";
 
 const dayjs = require("dayjs");
+
 const relativeTime = require("dayjs/plugin/relativeTime");
-const calendar = require("dayjs/plugin/calendar");
+
+dayjs.extend(relativeTime);
 
 const calculateCreated = (date) => {
-  dayjs.extend(relativeTime);
   return dayjs(date).fromNow();
 };
 
 export const displayDate = (date) => {
-  dayjs.extend(relativeTime);
   return dayjs(date).format(`MMMM DD, YYYY [at] hh:mm A`);
 };
 
 export const shortDisplayDate = (date) => {
-  dayjs.extend(relativeTime);
   return dayjs(date).format(`MMM DD [,] H:mm`);
 };
 
