@@ -56,6 +56,8 @@
 
 ## Development Update Documentation
 ### 27/04/2021 - 1.0.0
+- Added Message display
+- Added Ability to mark messages as read
 - UserScreen: Removed message button
 - index: Remove unused import
 - NavBar: Removed unused imports
