@@ -14,12 +14,13 @@ import toffy from "../api/toffy";
 
 import { useHistory } from "react-router";
 
-import logo from "../img/logo.png"
+import logo from "../img/logo.png";
 
 export default function LandingScreen() {
   let { windowWidth, windowHeight } = useContext(WindowContext);
 
   const [stats, setStats] = useState(null);
+  const [statDelay, setStatDelay] = useState(1000);
 
   let history = useHistory();
 
@@ -36,9 +37,10 @@ export default function LandingScreen() {
     try {
       const res = await toffy.get("/stat/user");
       setStats(res.data);
+      setStatDelay(statDelay * 2);
     } catch (error) {
       // : Error getting stats
-      await delay(20000);
+      await delay(statDelay);
       getStats();
     }
   };
