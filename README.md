@@ -1,5 +1,5 @@
 # Toffy React Project Frontend
-![Image of homepage](https://raw.githubusercontent.com/teobot/toffy-bucket/main/SharedScreenshot.jpg)
+![Image of homepage](https://raw.githubusercontent.com/teobot/toffy-bucket/main/toffyWide.png)
 *Student ID*: **18055445**  
 *Created By*: **Theo Clapperton**  
 *Description*: **The frontend for my final year project**  
