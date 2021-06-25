@@ -8,7 +8,7 @@
 *Style Guide*: **Prettier**  
 *Linter*: **ESlint**  
 *Version*: **`1.0.0`**  
-*Github Repo Link*: ***[Github Link](https://github.com/teobot/toffy)***  
+*Github Repo Link*: ***[Github Link][project]***  
 *Live Open Version*: ***[Homepage Link](https://toffy.netlify.app/)***  
 
 
@@ -253,3 +253,7 @@
 * Website: https://teobot.github.io/
 * Github: [@teobot](https://github.com/teobot)
 * LinkedIn: [@theoClapperton](https://linkedin.com/in/theoClapperton)
+
+
+[project]: https://github.com/teobot/toffy
+
