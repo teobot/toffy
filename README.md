@@ -15,14 +15,10 @@
 ## Development
 
 ### Install Dependencies
-```javascript
-  npm install
-```
+`npm install`
 
 ### Start Local Development
-```javascript
-  yarn start
-```
+`yarn start`
 
 ## Deployment
 1. Change `./src/api/toffy.js` DEV to false
