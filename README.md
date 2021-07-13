@@ -246,10 +246,11 @@
 
 👤 **Theo Clapperton**
 
-* Website: https://teobot.github.io/
+* Website: [website]
 * Github: [@teobot](https://github.com/teobot)
 * LinkedIn: [@theoClapperton](https://linkedin.com/in/theoClapperton)
 
 
 [project]: https://github.com/teobot/toffy
+[website]: https://theoclapperton-portfolio.netlify.app/
 
